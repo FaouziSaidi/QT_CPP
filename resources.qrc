@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/pics">
+        <file>BG/Rectangle 69.png</file>
+        <file>BG/Rectangle 70.png</file>
+    </qresource>
+</RCC>

@@ -1,5 +1,5 @@
-QT       += core gui
-QT += sql
+QT       += core gui sql
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 
 CONFIG += c++11
@@ -17,19 +17,22 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     connection.cpp \
+    employes.cpp \
     main.cpp \
-    gestionvehiculeselectriques.cpp \
-    voitureelectrique.cpp
+    gestion_employes.cpp
 
 HEADERS += \
     connection.h \
-    gestionvehiculeselectriques.h \
-    voitureelectrique.h
+    employes.h \
+    gestion_employes.h
 
 FORMS += \
-    gestionvehiculeselectriques.ui
+    gestion_employes.ui
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
+
+RESOURCES += \
+    resources.qrc
