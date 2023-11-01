@@ -23,6 +23,9 @@
       <height>650</height>
      </rect>
     </property>
+    <property name="styleSheet">
+     <string notr="true">background-color: rgb(88, 184, 167);</string>
+    </property>
     <property name="text">
      <string/>
     </property>
@@ -40,7 +43,7 @@
      </rect>
     </property>
     <property name="currentIndex">
-     <number>0</number>
+     <number>1</number>
     </property>
     <widget class="QWidget" name="page">
      <widget class="QLabel" name="label_2">
@@ -112,6 +115,9 @@ border-color: rgb(16, 125, 105);
 border: 1px solid #107D69;
     width: 200px;
 </string>
+      </property>
+      <property name="maxLength">
+       <number>2</number>
       </property>
      </widget>
      <widget class="QLineEdit" name="salaire">
@@ -255,8 +261,8 @@ font: 75 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QPushButton" name="pushButton">
       <property name="geometry">
        <rect>
-        <x>130</x>
-        <y>470</y>
+        <x>20</x>
+        <y>430</y>
         <width>91</width>
         <height>31</height>
        </rect>
@@ -275,8 +281,28 @@ font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QPushButton" name="pushButton_2">
       <property name="geometry">
        <rect>
-        <x>20</x>
-        <y>470</y>
+        <x>180</x>
+        <y>510</y>
+        <width>31</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 10px;
+font: 10pt &quot;MS Shell Dlg 2&quot;;
+background-color: rgb(255, 255, 255);
+color: rgb(17, 178, 149);
+font: 8pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>&lt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="modifier">
+      <property name="geometry">
+       <rect>
+        <x>130</x>
+        <y>430</y>
         <width>91</width>
         <height>31</height>
        </rect>
@@ -289,7 +315,7 @@ color: rgb(17, 178, 149);
 font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
       </property>
       <property name="text">
-       <string>precedent</string>
+       <string>modifier</string>
       </property>
      </widget>
     </widget>
@@ -313,9 +339,9 @@ font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QLabel" name="label_4">
       <property name="geometry">
        <rect>
-        <x>80</x>
+        <x>50</x>
         <y>0</y>
-        <width>81</width>
+        <width>151</width>
         <height>51</height>
        </rect>
       </property>
@@ -324,7 +350,7 @@ font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
 font: 12pt &quot;MS Shell Dlg 2&quot;;</string>
       </property>
       <property name="text">
-       <string>Ajouter</string>
+       <string>Ajouter/Modifier</string>
       </property>
      </widget>
      <widget class="QLabel" name="label_5">
@@ -361,6 +387,9 @@ border-color: rgb(16, 125, 105);
 border: 1px solid #107D69;
     width: 200px;
 </string>
+      </property>
+      <property name="maxLength">
+       <number>9</number>
       </property>
      </widget>
      <widget class="QLabel" name="label_6">
@@ -542,6 +571,9 @@ border: 1px solid #107D69;
     width: 200px;
 </string>
       </property>
+      <property name="maxLength">
+       <number>8</number>
+      </property>
      </widget>
      <widget class="QLabel" name="label_11">
       <property name="geometry">
@@ -573,10 +605,10 @@ font: 75 9pt &quot;MS Shell Dlg 2&quot;;</string>
      <widget class="QPushButton" name="pushButton_3">
       <property name="geometry">
        <rect>
-        <x>120</x>
-        <y>490</y>
-        <width>91</width>
-        <height>31</height>
+        <x>180</x>
+        <y>510</y>
+        <width>31</width>
+        <height>21</height>
        </rect>
       </property>
       <property name="styleSheet">
@@ -587,75 +619,16 @@ color: rgb(17, 178, 149);
 font: 75 8pt &quot;MS Shell Dlg 2&quot;;</string>
       </property>
       <property name="text">
-       <string>suivant</string>
+       <string>&gt;</string>
       </property>
      </widget>
     </widget>
    </widget>
-   <widget class="QLineEdit" name="cin_e_2">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>60</y>
-      <width>541</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius: 10px;
-background-color: rgb(255, 255, 255);
-border-color: rgb(16, 125, 105);
-
-border: 1px solid #107D69;
-    width: 200px;
-</string>
-    </property>
-   </widget>
-   <widget class="QLineEdit" name="cin_e_3">
-    <property name="geometry">
-     <rect>
-      <x>960</x>
-      <y>60</y>
-      <width>31</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius: 10px;
-background-color: rgb(255, 255, 255);
-border-color: rgb(16, 125, 105);
-
-border: 1px solid #107D69;
-    width: 200px;
-</string>
-    </property>
-   </widget>
-   <widget class="QPushButton" name="statistique">
-    <property name="geometry">
-     <rect>
-      <x>470</x>
-      <y>510</y>
-      <width>171</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius: 20px;
-font: 75 8pt &quot;MS Shell Dlg 2&quot;;
-font: 75 9pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(7, 125, 73);
-background-color: rgb(255, 255, 255);
-</string>
-    </property>
-    <property name="text">
-     <string>Statistique</string>
-    </property>
-   </widget>
    <widget class="QPushButton" name="rendement">
     <property name="geometry">
      <rect>
-      <x>810</x>
-      <y>510</y>
+      <x>820</x>
+      <y>550</y>
       <width>171</width>
       <height>41</height>
      </rect>
@@ -675,8 +648,8 @@ background-color: rgb(255, 255, 255);
    <widget class="QPushButton" name="generer_pdf">
     <property name="geometry">
      <rect>
-      <x>470</x>
-      <y>580</y>
+      <x>510</x>
+      <y>550</y>
       <width>171</width>
       <height>41</height>
      </rect>
@@ -693,59 +666,218 @@ background-color: rgb(255, 255, 255);
      <string>Generer PDF</string>
     </property>
    </widget>
-   <widget class="QTableView" name="tableView">
+   <widget class="QStackedWidget" name="stackedWidget_3">
     <property name="geometry">
      <rect>
-      <x>360</x>
-      <y>110</y>
-      <width>701</width>
-      <height>371</height>
+      <x>320</x>
+      <y>50</y>
+      <width>751</width>
+      <height>421</height>
      </rect>
     </property>
-   </widget>
-   <widget class="QStackedWidget" name="stackedWidget_2">
-    <property name="geometry">
-     <rect>
-      <x>360</x>
-      <y>99</y>
-      <width>721</width>
-      <height>411</height>
-     </rect>
+    <property name="currentIndex">
+     <number>0</number>
     </property>
-    <widget class="QWidget" name="page_5"/>
-    <widget class="QWidget" name="page_6"/>
-   </widget>
-   <widget class="QPushButton" name="supprimer">
-    <property name="geometry">
-     <rect>
-      <x>810</x>
-      <y>580</y>
-      <width>171</width>
-      <height>41</height>
-     </rect>
-    </property>
-    <property name="styleSheet">
-     <string notr="true">border-radius: 20px;
-font: 75 8pt &quot;MS Shell Dlg 2&quot;;
-font: 75 9pt &quot;MS Shell Dlg 2&quot;;
-color: rgb(7, 125, 73);
+    <widget class="QWidget" name="page_7">
+     <widget class="QLabel" name="label_17">
+      <property name="geometry">
+       <rect>
+        <x>0</x>
+        <y>0</y>
+        <width>771</width>
+        <height>421</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="resources.qrc">:/pics/BG/Rectangle 69.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QTableView" name="tableView">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>90</y>
+        <width>681</width>
+        <height>251</height>
+       </rect>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="cin_e_2">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>40</y>
+        <width>451</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 10px;
 background-color: rgb(255, 255, 255);
+border-color: rgb(16, 125, 105);
+
+border: 1px solid #107D69;
+    width: 200px;
 </string>
-    </property>
-    <property name="text">
-     <string>supprimer</string>
-    </property>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="cin_e_3">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>40</y>
+        <width>31</width>
+        <height>27</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 10px;
+background-color: rgb(255, 255, 255);
+border-color: rgb(16, 125, 105);
+
+border: 1px solid #107D69;
+    width: 200px;
+</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="next_page1">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>0</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true"/>
+      </property>
+      <property name="text">
+       <string>&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_4">
+      <property name="geometry">
+       <rect>
+        <x>250</x>
+        <y>380</y>
+        <width>71</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 10px;
+font: 10pt &quot;MS Shell Dlg 2&quot;;
+background-color: rgb(255, 255, 255);
+
+font: 75 8pt &quot;MS Shell Dlg 2&quot;;
+color: rgb(9, 141, 97);</string>
+      </property>
+      <property name="text">
+       <string>supprimer</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_19">
+      <property name="geometry">
+       <rect>
+        <x>60</x>
+        <y>350</y>
+        <width>91</width>
+        <height>16</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(11, 107, 67);</string>
+      </property>
+      <property name="text">
+       <string>employes_id</string>
+      </property>
+     </widget>
+     <widget class="QLineEdit" name="supprimer">
+      <property name="geometry">
+       <rect>
+        <x>50</x>
+        <y>380</y>
+        <width>161</width>
+        <height>22</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">border-radius: 10px;
+background-color: rgb(255, 255, 255);
+border-color: rgb(16, 125, 105);
+
+border: 1px solid #107D69;
+    width: 200px;
+</string>
+      </property>
+     </widget>
+    </widget>
+    <widget class="QWidget" name="page_8">
+     <widget class="QLabel" name="label_18">
+      <property name="geometry">
+       <rect>
+        <x>-20</x>
+        <y>0</y>
+        <width>791</width>
+        <height>431</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string/>
+      </property>
+      <property name="pixmap">
+       <pixmap resource="resources.qrc">:/pics/BG/Rectangle 69.png</pixmap>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pushButton_5">
+      <property name="geometry">
+       <rect>
+        <x>700</x>
+        <y>0</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&gt;</string>
+      </property>
+     </widget>
+     <widget class="QPushButton" name="pred_page2">
+      <property name="geometry">
+       <rect>
+        <x>670</x>
+        <y>0</y>
+        <width>21</width>
+        <height>21</height>
+       </rect>
+      </property>
+      <property name="text">
+       <string>&lt;</string>
+      </property>
+     </widget>
+     <widget class="QLabel" name="label_20">
+      <property name="geometry">
+       <rect>
+        <x>280</x>
+        <y>20</y>
+        <width>221</width>
+        <height>51</height>
+       </rect>
+      </property>
+      <property name="styleSheet">
+       <string notr="true">color: rgb(255, 255, 255);
+font: 28pt &quot;MS Shell Dlg 2&quot;;</string>
+      </property>
+      <property name="text">
+       <string>statistique</string>
+      </property>
+     </widget>
+    </widget>
    </widget>
-   <zorder>stackedWidget_2</zorder>
-   <zorder>label</zorder>
-   <zorder>stackedWidget</zorder>
-   <zorder>cin_e_2</zorder>
-   <zorder>cin_e_3</zorder>
-   <zorder>statistique</zorder>
-   <zorder>rendement</zorder>
-   <zorder>generer_pdf</zorder>
-   <zorder>tableView</zorder>
-   <zorder>supprimer</zorder>
   </widget>
   <widget class="QMenuBar" name="menubar">
    <property name="geometry">

@@ -24,6 +24,14 @@ private slots:
 
     void on_pushButton_2_clicked();
 
+    void on_pushButton_4_clicked();
+
+    void on_next_page1_clicked();
+
+    void on_pred_page2_clicked();
+
+    void on_modifier_clicked();
+
 private:
     Ui::gestion_employes *ui;
     Employes emp;
