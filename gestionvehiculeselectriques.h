@@ -2,6 +2,7 @@
 #define GESTIONVEHICULESELECTRIQUES_H
 
 #include <QMainWindow>
+#include "voitureelectrique.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GestionVehiculesElectriques; }
@@ -18,7 +19,13 @@ public:
 private slots:
     void on_AjouterVoitureBouton_clicked();
 
+    void on_SupprimerVoitureBouton_clicked();
+
+    void on_ModifierVoitureBouton_clicked();
+
 private:
     Ui::GestionVehiculesElectriques *ui;
+
+    VoitureElectrique voiture; //Slide 34 from powerpoint, used to be able to call function supprimer.
 };
 #endif // GESTIONVEHICULESELECTRIQUES_H

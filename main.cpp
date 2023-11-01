@@ -7,10 +7,12 @@
 int main(int argc, char *argv[])
 {
     QApplication a(argc, argv);
-    GestionVehiculesElectriques w;
     Connection c; //Instance de la classe Connection
 
     bool test=c.createconnect();
+
+    GestionVehiculesElectriques w;
+
         if(test)
         {
             w.show();
@@ -24,5 +26,6 @@ int main(int argc, char *argv[])
                         QObject::tr("connection failed.\n"
                                     "Click Cancel to exit."), QMessageBox::Cancel);
         }
+
     return a.exec();
 }

@@ -17,10 +17,10 @@
    <widget class="QTableView" name="TableVehiculesElectriques">
     <property name="geometry">
      <rect>
-      <x>410</x>
-      <y>160</y>
-      <width>256</width>
-      <height>192</height>
+      <x>190</x>
+      <y>170</y>
+      <width>711</width>
+      <height>261</height>
      </rect>
     </property>
    </widget>
@@ -144,7 +144,7 @@
    <widget class="QPushButton" name="AjouterVoitureBouton">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>910</x>
       <y>170</y>
       <width>80</width>
       <height>22</height>
@@ -157,7 +157,7 @@
    <widget class="QPushButton" name="SupprimerVoitureBouton">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>910</x>
       <y>200</y>
       <width>80</width>
       <height>22</height>
@@ -170,7 +170,7 @@
    <widget class="QPushButton" name="ModifierVoitureBouton">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>910</x>
       <y>230</y>
       <width>80</width>
       <height>22</height>
@@ -183,7 +183,7 @@
    <widget class="QPushButton" name="DetailsVoitureBouton">
     <property name="geometry">
      <rect>
-      <x>260</x>
+      <x>910</x>
       <y>260</y>
       <width>80</width>
       <height>22</height>
