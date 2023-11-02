@@ -10,4 +10,5 @@ public:
     Connection();
     bool createconnect();
 };
+
 #endif // CONNECTION_H

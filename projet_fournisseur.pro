@@ -1,6 +1,7 @@
+QT +=sql
 QT       += core gui
-QT += sql
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
+
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
 
 CONFIG += c++11
 
@@ -17,17 +18,20 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     connection.cpp \
+    fournisseurs.cpp \
     main.cpp \
-    gestionvehiculeselectriques.cpp \
-    voitureelectrique.cpp
+    fournisseur.cpp
 
 HEADERS += \
     connection.h \
-    gestionvehiculeselectriques.h \
-    voitureelectrique.h
+    fournisseur.h \
+    fournisseurs.h
 
 FORMS += \
-    gestionvehiculeselectriques.ui
+    fournisseur.ui
+
+TRANSLATIONS += \
+    projet_fournisseur_fr_FR.ts
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
