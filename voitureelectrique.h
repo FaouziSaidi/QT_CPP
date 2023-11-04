@@ -14,6 +14,9 @@ class VoitureElectrique
         //Constructeurs
         VoitureElectrique(){};//Constructeur classique
         VoitureElectrique(QString,QString,QString,QString,QString,QString,QString,QString,int);//Constructeur parametré
+        bool isValidVIN(QString vin);
+        bool existe(QString VIN);
+
 
         //Getters
         QString getVIN(){return VIN;}
@@ -46,6 +49,13 @@ class VoitureElectrique
         QSqlQueryModel * afficher();
         bool modifier(QString VIN, QString newPlaqueImmatriculation, QString newMarque, QString newModele, QString newEtat, QString newCharge, QString newMaintenance, QString newDisponibilite, int newAnneeFabrication);
         bool supprimer(QString);
+
+        //Métiers supplémentaires
+        QSqlQueryModel * trierParAnnee();
+        QSqlQueryModel * trierParVIN();
+        QSqlQueryModel *rechercherParMarque (const QString &marque);
+
+
 
 
 

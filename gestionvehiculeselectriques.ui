@@ -180,7 +180,7 @@
      <string>ModifierVoiture</string>
     </property>
    </widget>
-   <widget class="QPushButton" name="DetailsVoitureBouton">
+   <widget class="QPushButton" name="TrierParAnneeBouton">
     <property name="geometry">
      <rect>
       <x>910</x>
@@ -190,7 +190,7 @@
      </rect>
     </property>
     <property name="text">
-     <string>DetailsVoiture</string>
+     <string>Tri par année</string>
     </property>
    </widget>
    <widget class="QLineEdit" name="lineEdit">
@@ -281,6 +281,68 @@
       <width>113</width>
       <height>21</height>
      </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="TriVINAlphabetiqueBouton">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>290</y>
+      <width>80</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Tri VIN</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="RechercherParMarqueBouton">
+    <property name="geometry">
+     <rect>
+      <x>910</x>
+      <y>320</y>
+      <width>80</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Recherche par marque</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEditRechercheMarque">
+    <property name="geometry">
+     <rect>
+      <x>1000</x>
+      <y>320</y>
+      <width>113</width>
+      <height>21</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="BoutonExportPDF">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>440</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Exporter en PDF</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="ShowMakeStatisticsButton">
+    <property name="geometry">
+     <rect>
+      <x>500</x>
+      <y>470</y>
+      <width>91</width>
+      <height>22</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>Show stats</string>
     </property>
    </widget>
   </widget>
