@@ -1,6 +1,18 @@
 #include <QString>
 #include <QMessageBox>
 #include<iostream>
+#include <QFileDialog>
+#include <QPdfWriter>
+#include <QtPrintSupport/QPrinter>
+#include <QPainter>
+#include <QTextDocument>
+#include <QTextTable>
+#include <QTextCursor>
+#include <QTextTableCell>
+#include <QTextFrame>
+#include <QTextBlock>
+#include <QTextCharFormat>
+
 #include "employes.h"
 #include "gestion_employes.h"
 #include "ui_gestion_employes.h"
@@ -12,7 +24,6 @@ gestion_employes::gestion_employes(QWidget *parent)
     ui->setupUi(this);
     ui->tableView->setModel(emp.afficher());
     ui->tableView->resizeColumnsToContents();
-    ui->tableView->setColumnWidth(7, 100);
     ui->cin_e->setValidator(new QIntValidator(0,99999999,this));
     ui->mail_e_2->setValidator(new QIntValidator(0,99999999,this));
     ui->age->setValidator(new QIntValidator(0,99,this));
@@ -49,9 +60,9 @@ void gestion_employes::on_pushButton_clicked()//ajouter
     QString Email=ui->mail_e->text();
     QString genre = getSelectedGender();
     QString mot_de_passe=ui->mot_de_passe_e->text();
-    double cin=ui->cin_e->text().toDouble();
+    int cin=ui->cin_e->text().toInt();
     int age=ui->age->text().toInt();
-    double num_tel=ui->mail_e_2->text().toDouble();
+    int num_tel=ui->mail_e_2->text().toInt();
     int employes_id=ui->employe_id->text().toInt();
     float salaire=ui->salaire->text().toFloat();
     float heures_de_travail=ui->heures_de_travail->text().toFloat();
@@ -59,25 +70,25 @@ void gestion_employes::on_pushButton_clicked()//ajouter
 
     if (nom.isEmpty() || prenom.isEmpty() || Email.isEmpty() || genre.isEmpty() || mot_de_passe.isEmpty()||ui->cin_e->text().isEmpty()||ui->age->text().isEmpty()||ui->mail_e_2->text().isEmpty()||ui->employe_id->text().isEmpty()||ui->salaire->text().isEmpty()||ui->heures_de_travail->text().isEmpty()) {
             QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Tous les champs doivent être remplis."));
-            return; // Arrêtez l'exécution si les données sont invalides.
+            return;
         }
 
         if (salaire <= 0.0) {
             QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le salaire doit être supérieur à zéro."));
             return;
         }
-    QRegExp regex("^[a-zA-Z0-9]+$");  // Mot de passe composé de lettres et de chiffres seulement
+    QRegExp regex("^[a-zA-Z0-9]+$");
 
     if (!regex.exactMatch(mot_de_passe))
     {
         QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Mot de passe non valide. Utilisez uniquement des lettres et des chiffres."), QMessageBox::Cancel);
-        return;  // Sortez de la fonction si la vérification échoue
+        return;
     }
     QRegExp emailRegex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$");
 
     if (!emailRegex.exactMatch(Email)) {
         QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Adresse email non valide. Utilisez le format abc@abc.abc."), QMessageBox::Cancel);
-        return;  // Sortez de la fonction si la vérification échoue
+        return;
     }
     Employes E(nom,prenom,Email,genre, mot_de_passe,cin,age,num_tel,employes_id,salaire,heures_de_travail,date_embauche);
     bool test=E.ajouter();
@@ -150,12 +161,11 @@ void gestion_employes::on_pred_page2_clicked()
 
 
 
-
 void gestion_employes::on_modifier_clicked()
 {
-    int employes_id = ui->employe_id->text().toInt(); // Get the employee ID to identify the employee to modify
+    int employes_id = ui->employe_id->text().toInt();
 
-       // Check if the employee ID is valid
+
        if (employes_id <= 0) {
            QMessageBox::critical(nullptr, QObject::tr("Invalid Input"), QObject::tr("Please enter a valid employee ID."), QMessageBox::Cancel);
            return;
@@ -166,9 +176,9 @@ void gestion_employes::on_modifier_clicked()
        QString Email = ui->mail_e->text();
        QString genre = getSelectedGender();
        QString mot_de_passe = ui->mot_de_passe_e->text();
-       double cin = ui->cin_e->text().toDouble();
+       int cin = ui->cin_e->text().toInt();
        int age = ui->age->text().toInt();
-       double num_tel = ui->mail_e_2->text().toDouble();
+       int num_tel = ui->mail_e_2->text().toInt();
        float salaire = ui->salaire->text().toFloat();
        float heures_de_travail = ui->heures_de_travail->text().toFloat();
        QDate date_embauche = ui->dateEdit->date();
@@ -176,25 +186,25 @@ void gestion_employes::on_modifier_clicked()
 
        if (nom.isEmpty() || prenom.isEmpty() || Email.isEmpty() || genre.isEmpty() || mot_de_passe.isEmpty()||ui->cin_e->text().isEmpty()||ui->age->text().isEmpty()||ui->mail_e_2->text().isEmpty()||ui->employe_id->text().isEmpty()||ui->salaire->text().isEmpty()||ui->heures_de_travail->text().isEmpty()) {
                QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Tous les champs doivent être remplis."));
-               return; // Arrêtez l'exécution si les données sont invalides.
+               return;
            }
 
            if (salaire <= 0.0) {
                QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le salaire doit être supérieur à zéro."));
                return;
            }
-       QRegExp regex("^[a-zA-Z0-9]+$");  // Mot de passe composé de lettres et de chiffres seulement
+       QRegExp regex("^[a-zA-Z0-9]+$");
 
        if (!regex.exactMatch(mot_de_passe))
        {
            QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Mot de passe non valide. Utilisez uniquement des lettres et des chiffres."), QMessageBox::Cancel);
-           return;  // Sortez de la fonction si la vérification échoue
+           return;
        }
        QRegExp emailRegex("^[A-Za-z0-9._%+-]+@[A-Za-z0-9.-]+\\.[A-Za-z]{2,4}$");
 
        if (!emailRegex.exactMatch(Email)) {
            QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Adresse email non valide. Utilisez le format abc@abc.abc."), QMessageBox::Cancel);
-           return;  // Sortez de la fonction si la vérification échoue
+           return;
        }
 
 
@@ -230,101 +240,170 @@ void gestion_employes::on_modifier_clicked()
 
 
 
-/*void gestion_employes::on_modifier_clicked()
+
+
+void gestion_employes::on_tableView_doubleClicked(const QModelIndex &index)
 {
-       QString nom = ui->nom_e->text();
-       QString prenom = ui->prenom->text();
-       QString Email = ui->mail_e->text();
-       QString genre = getSelectedGender();
-       QString mot_de_passe = ui->mot_de_passe_e->text();
-       int cin = ui->cin_e->text().toInt();
-       int age = ui->age->text().toInt();
-       int num_tel = ui->mail_e_2->text().toInt();
-       int employes_id = ui->employe_id->text().toInt();
-       float salaire = ui->salaire->text().toFloat();
-       float heures_de_travail = ui->heures_de_travail->text().toFloat();
-       QDate date_embauche = ui->dateEdit->date();
+    int row = index.row();
+
+    QModelIndex idIndex = ui->tableView->model()->index(row, 0);
+    int employes_id = ui->tableView->model()->data(idIndex).toInt();
+
+    Employes E;
 
 
-       Employes E(nom, prenom, Email, genre, mot_de_passe, cin, age, num_tel, employes_id, salaire, heures_de_travail, date_embauche);
+    if (E.load(employes_id)) {
+
+        ui->nom_e->setText(E.getNom());
+        ui->prenom->setText(E.getPrenom());
+        ui->mail_e->setText(E.getEmail());
+        if (E.getGenre() == "Homme") {
+                    ui->homme->setChecked(true);
+                    ui->femme->setChecked(false);
+                } else if (E.getGenre() == "Femme") {
+                    ui->homme->setChecked(false);
+                    ui->femme->setChecked(true);
+                }
+        ui->mot_de_passe_e->setText(E.getMotDePasse());
+        ui->cin_e->setText(QString::number(E.getCIN()));
+        ui->age->setText(QString::number(E.getAge()));
+        ui->mail_e_2->setText(QString::number(E.getNumeroTelephone()));
+        ui->employe_id->setText(QString::number(employes_id));
+        ui->salaire->setText(QString::number(E.getSalaire()));
+        ui->heures_de_travail->setText(QString::number(E.getHeuresDeTravail()));
+        ui->dateEdit->setDate(E.getDateEmbauche());
 
 
-       if (E.existe()) {
+    } else {
 
-           bool test = E.modifier();
-           if (test) {
-               ui->tableView->setModel(emp.afficher());
-               QMessageBox::information(nullptr, QObject::tr("Ok"), QObject::tr("Modification effectuée. Cliquez sur Annuler pour quitter."), QMessageBox::Cancel);
-           } else {
-               QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("Modification non effectuée. Cliquez sur Annuler pour quitter."), QMessageBox::Cancel);
-           }
-       } else {
-           QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("L'employé n'existe pas. Modification non effectuée. Cliquez sur Cancel pour quitter."), QMessageBox::Cancel);
+        QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("L'employé n'a pas été trouvé."), QMessageBox::Ok);
+    }
+}
+
+
+
+void gestion_employes::on_recherche_botton_clicked()
+{
+       QString nomRecherchee = ui->recherche_par_nom->text();
+
+       QSqlQueryModel *results = emp.rechercherParNom(nomRecherchee);
+
+       if (results)
+       {
+           ui->tableView->setModel(results);
+           ui->tableView->resizeColumnsToContents();
+       }
+       else
+       {
+           QMessageBox::critical(this, "Erreur", "La recherche a échoué. Veuillez réessayer.");
        }
 }
-*/
-/*
-void gestion_employes::on_modifier_clicked()
+
+
+void gestion_employes::on_rafrechir_botton_clicked()
 {
-    int employes_id = ui->employe_id->text().toInt();
-        Employes E;
-           E.setID(employes_id);
-        // Charger les données actuelles de l'employé depuis la base de données
-        if (E.existe()) {
-            QString nom = ui->nom_e->text();
-            QString prenom = ui->prenom->text();
-            QString Email = ui->mail_e->text();
-            QString genre = getSelectedGender();
-            QString mot_de_passe = ui->mot_de_passe_e->text();
-            int cin = ui->cin_e->text().toInt();
-            int age = ui->age->text().toInt();
-            int num_tel = ui->mail_e_2->text().toInt();
-            float salaire = ui->salaire->text().toFloat();
-            float heures_de_travail = ui->heures_de_travail->text().toFloat();
-            QDate date_embauche = ui->dateEdit->date();
+    ui->tableView->setModel(emp.afficher());
+    ui->tableView->resizeColumnsToContents();
+    ui->recherche_par_nom->clear();
+}
 
-            // Mettre à jour les champs non vides
-            if (!nom.isEmpty()) {
-                E.setNom(nom);
-            }
-            if (!prenom.isEmpty()) {
-                E.setPrenom(prenom);
-            }
-            if (!Email.isEmpty()) {
-                E.setEmail(Email);
-            }
+void gestion_employes::on_pushButton_6_clicked()//tri
+{
+    QSqlQueryModel *sortedModel=emp.trierParAnneeEmbauche();
+    ui->tableView->setModel(sortedModel);
+    ui->tableView->resizeColumnsToContents();
+}
 
-            if (!mot_de_passe.isEmpty()) {
-                E.setMotDePasse(mot_de_passe);
-            }
-            if (cin != 0) {
-                E.setCIN(cin);
-            }
-            if (age != 0) {
-                E.setAge(age);
-            }
-            if (num_tel != 0) {
-                E.setNumeroTelephone(num_tel);
-            }
-            if (salaire != 0.0) {
-                E.setSalaire(salaire);
-            }
-            if (heures_de_travail != 0.0) {
-                E.setHeuresDeTravail(heures_de_travail);
-            }
-            if (!date_embauche.isNull()) {
-                E.setDateEmbauche(date_embauche);
-            }
 
-            // Effectuer la mise à jour dans la base de données
-            if (E.modifier()) {
-                ui->tableView->setModel(emp.afficher());
-                QMessageBox::information(nullptr, QObject::tr("OK"),
-                    QObject::tr("Modification effectuée.\nCliquez sur Annuler pour quitter."), QMessageBox::Cancel);
-            } else {
-                QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("La modification n'a pas pu être effectuée.\nCliquez sur Annuler pour quitter."), QMessageBox::Cancel);
-            }
-        } else {
-            QMessageBox::critical(nullptr, QObject::tr("Erreur"), QObject::tr("L'employé n'a pas été trouvé.\nCliquez sur Annuler pour quitter."), QMessageBox::Cancel);
+
+
+
+
+
+void gestion_employes::on_generer_pdf_clicked()
+{
+    Employes e;
+    QList<Employes> employees = e.getAllEmployees();
+    if (employees.isEmpty()) {
+        // Gérer le cas où aucun employé n'est trouvé dans la base de données
+        return;
+    }
+
+    QFileDialog dialog(this);
+
+    QString filePath = dialog.getSaveFileName(this, "Enregistrer le fichier PDF", "C:/Users/syrin/Desktop/projet/Gestion_des_Employes/employees.pdf", "PDF Files (*.pdf)");
+    if (filePath.isEmpty()) {
+        return;
+    }
+
+    QPdfWriter pdfWriter(filePath);
+    pdfWriter.setPageSize(QPageSize(QPageSize::A4));
+
+    QPainter painter(&pdfWriter);
+
+    // Définir la mise en page du document PDF et les polices
+    QFont font;
+    font.setPixelSize(100); // Ajuster la taille de la police
+    painter.setFont(font);
+
+    int y = 20; // Position verticale initiale
+
+    // Définir les largeurs des colonnes et leurs étiquettes
+    const int colWidth = 900;
+    const QStringList colLabels = {"ID employes", "Nom", "Prénom", "Email", "genre", "telephone", "CIN", "RIB", "age", "embauche", "Salaire"};
+
+    // Dessiner la première ligne avec les étiquettes de colonnes
+    for (int i = 0; i < colLabels.size(); i++) {
+        painter.drawText(i * colWidth, y, colWidth, 100, Qt::AlignLeft, colLabels[i]);
+    }
+    y += 200; // Déplacement vertical pour les données
+
+    for (Employes &employee : employees) {
+        // Dessiner une ligne pour chaque employé
+        for (int i = 0; i < colLabels.size(); i++) {
+            painter.drawText(i * colWidth, y, colWidth, 100, Qt::AlignLeft, getEmployeeField(employee, i));
         }
-}*/
+        y += 200; // Déplacement vertical pour la prochaine ligne
+    }
+
+    bool exportSuccess = painter.end();
+    if (exportSuccess) {
+        QMessageBox::information(this, "Success", "Les informations des employés ont été exportées vers le fichier PDF.");
+    } else {
+        QMessageBox::critical(this, "Erreur", "Échec de l'exportation des informations des employés vers le fichier PDF.");
+    }
+}
+
+QString gestion_employes::getEmployeeField(const Employes &employee, int columnIndex)
+{
+    switch (columnIndex) {
+        case 0: return QString::number(employee.getEmployesId());
+        case 1: return employee.getNom();
+        case 2: return employee.getPrenom();
+        case 3: return employee.getEmail();
+        case 4: return employee.getGenre();
+        case 5: return QString::number(employee.getNumeroTelephone());
+        case 6: return QString::number(employee.getCIN());
+        case 7: return QString::number(employee.getAge());
+        case 8: return employee.getMotDePasse();
+        case 9: return employee.getDateEmbauche().toString("yyyy-MM-dd");
+        case 10: return QString::number(employee.getSalaire());
+        case 11: return employee.getMotDePasse();
+
+        default: return QString();
+    }
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+

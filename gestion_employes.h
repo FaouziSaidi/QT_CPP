@@ -32,6 +32,18 @@ private slots:
 
     void on_modifier_clicked();
 
+    void on_tableView_doubleClicked(const QModelIndex &index);
+
+    void on_recherche_botton_clicked();
+
+    void on_rafrechir_botton_clicked();
+
+    void on_pushButton_6_clicked();
+
+    void on_generer_pdf_clicked();
+
+    QString getEmployeeField(const Employes &employee, int columnIndex);
+
 private:
     Ui::gestion_employes *ui;
     Employes emp;
