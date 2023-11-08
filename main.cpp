@@ -1,4 +1,5 @@
 #include "gestion_employes.h"
+#include "authentification.h"
 #include <QApplication>
 #include <QMessageBox>
 #include "connection.h"
@@ -9,7 +10,8 @@ int main(int argc, char *argv[])
 
     Connection c;
     bool test=c.createconnect();
-    gestion_employes w;
+    Authentification w;
+
     if(test)
     {
         w.show();

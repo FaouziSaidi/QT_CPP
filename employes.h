@@ -4,6 +4,14 @@
 #include <QSqlQuery>
 #include <QSqlQueryModel>
 #include <QDate>
+#include <QMainWindow>
+#include <QtWidgets/QApplication>
+#include <QtWidgets/QMainWindow>
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
+
+QT_CHARTS_USE_NAMESPACE
 
 class Employes
 {
@@ -47,11 +55,16 @@ public:
         QSqlQueryModel * afficher();
         bool supprimer(int);
         bool modifier();
-        bool existe();
+        bool existe();//employes
+        bool vin_existe(QString vin);
+        bool id_reclamation_existe(int id_reclamation);
         bool load(int employes_id);
         QSqlQueryModel * rechercherParNom(const QString &marque);
         QSqlQueryModel* trierParAnneeEmbauche();
         QList<Employes> getAllEmployees();
+        QChartView* statistiques();
+        int employes_du_mois();
+        QSqlQueryModel * afficher_employe_du_mois();
 };
 
 #endif // EMPLOYES_H

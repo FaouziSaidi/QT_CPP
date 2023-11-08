@@ -244,4 +244,137 @@ QList<Employes> Employes::getAllEmployees()
 }
 
 
+// Fonction pour générer un graphique en secteurs (camembert) personnalisé
+QChartView* Employes::statistiques()
+{
+
+
+
+    QSqlQuery query;
+    int totalEmployees = 0;
+    int maleCount = 0;
+    int femaleCount = 0;
+
+    // Query the database to count the total number of employees and separate them by genre
+    if (query.exec("SELECT COUNT(*) FROM employes")) {
+        if (query.next()) {
+            totalEmployees = query.value(0).toInt();
+        }
+    }
+
+    if (query.exec("SELECT COUNT(*) FROM employes WHERE genre = 'Homme'")) {
+        if (query.next()) {
+            maleCount = query.value(0).toInt();
+        }
+    }
+
+    if (query.exec("SELECT COUNT(*) FROM employes WHERE genre = 'Femme'")) {
+        if (query.next()) {
+            femaleCount = query.value(0).toInt();
+        }
+    }
+
+    // Calculate the percentages
+    double pourc_homme = (static_cast<double>(maleCount) / totalEmployees) * 100;
+    double pourc_femme = (static_cast<double>(femaleCount) / totalEmployees) * 100;
+    QPieSeries *series = new QPieSeries();
+    QPieSlice *slicefemme = new QPieSlice("FEMME",pourc_femme);
+    QPieSlice *sliceHomme = new QPieSlice("HOMME",pourc_homme);
+
+    // Définir les couleurs de remplissage et de contour pour chaque secteur
+    slicefemme->setBrush(QColor("#F849F1")); // Couleur bleu-vert
+    slicefemme->setPen(QPen(QColor("#F849F1"), 2)); // Couleur bleu-vert pour le contour
+
+    sliceHomme->setBrush(QColor("#1EC8DF")); // Couleur rouge orangé
+    sliceHomme->setPen(QPen(QColor("#1EC8DF"), 2)); // Couleur rouge orangé pour le contour
+
+    series->append(slicefemme);
+    series->append(sliceHomme);
+
+    QChart *chart = new QChart();
+    chart->addSeries(series);
+    chart->setTitle("Statistique Hommes/Femme");
+
+    // Calcule les pourcentages
+    double total = 0;
+    for (QPieSlice *slice : series->slices()) {
+        total += slice->value();
+    }
+
+    // Itère sur tous les secteurs et effectue les mêmes modifications
+    for (QPieSlice *slice : series->slices()) {
+        slice->setExploded();
+        slice->setLabelVisible();
+
+        // Calcul du pourcentage et mise à jour de l'étiquette
+        double percentage = (slice->value() / total) * 100;
+        QString label = QString("%1 (%2%)").arg(slice->label()).arg(percentage, 0, 'f', 1);
+        slice->setLabel(label);
+    }
+
+    QChartView *chartView = new QChartView(chart);
+    chartView->setRenderHint(QPainter::Antialiasing);
+
+    return chartView;
+}
+
+bool Employes::vin_existe(QString vin)
+{
+        QSqlQuery query;
+        query.prepare("SELECT vin FROM VOITUREELECTRIQUE WHERE vin = :vin");
+        query.bindValue(":vin", vin);
+        return query.exec() && query.first();
+}
+
+
+
+bool Employes::id_reclamation_existe(int id_reclamation)
+{
+    QSqlQuery query;
+    query.prepare("SELECT RECLAMATION_ID FROM RECLAMATION WHERE RECLAMATION_ID = :id_reclamation");
+    query.bindValue(":id_reclamation", id_reclamation);
+    return query.exec() && query.first();
+}
+/*
+int Employes::employes_du_mois()
+{
+
+    QSqlQuery query;
+       query.prepare("SELECT employe_id, COUNT(vin) AS cars_count "
+                     "FROM gestion "
+                     "GROUP BY employe_id "
+                     "ORDER BY cars_count DESC "
+                     "LIMIT 1");
+
+       if (query.exec() && query.first()) {
+           int employeeId = query.value("employe_id").toInt();
+           return employeeId;
+       }
+
+       return -1;
+}
+*/
+
+
+QSqlQueryModel * Employes::afficher_employe_du_mois()
+{
+    QSqlQuery query;
+        query.prepare("SELECT EMPLOYES_ID, COUNT(*) AS repetitions FROM GESTION GROUP BY EMPLOYES_ID");
+
+        if (query.exec()) {
+            QSqlQueryModel *model = new QSqlQueryModel();
+            model->setQuery(query);
+            model->setHeaderData(0, Qt::Horizontal, QObject::tr("employes_id"));
+            model->setHeaderData(1, Qt::Horizontal, QObject::tr("nombre de voitures"));
+            return model;
+        }
+
+        return nullptr;
+}
+
+
+
+
+
+
 

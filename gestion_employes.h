@@ -1,9 +1,11 @@
 #ifndef GESTION_EMPLOYES_H
 #define GESTION_EMPLOYES_H
 
-#include <QMainWindow>
+
+
 #include"employes.h"
 QT_BEGIN_NAMESPACE
+
 namespace Ui { class gestion_employes; }
 QT_END_NAMESPACE
 
@@ -43,6 +45,12 @@ private slots:
     void on_generer_pdf_clicked();
 
     QString getEmployeeField(const Employes &employee, int columnIndex);
+
+    void on_statistique_clicked();
+
+    void on_gerer_clicked();
+
+//    void on_repondre_clicked();
 
 private:
     Ui::gestion_employes *ui;
