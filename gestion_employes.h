@@ -52,6 +52,10 @@ private slots:
 
 //    void on_repondre_clicked();
 
+
+
+    void on_rendement_clicked();
+
 private:
     Ui::gestion_employes *ui;
     Employes emp;

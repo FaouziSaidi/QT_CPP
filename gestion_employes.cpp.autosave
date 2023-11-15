@@ -38,7 +38,6 @@ gestion_employes::gestion_employes(QWidget *parent)
     ui->setupUi(this);
         ui->tableView->setModel(emp.afficher());
         ui->tableView->resizeColumnsToContents();
-      //  int employes_du_mois=emp.employes_du_mois();
         ui->tableView_2->setModel(emp.afficher_employe_du_mois());
         ui->tableView_2->resizeColumnsToContents();
         ui->cin_e->setValidator(new QIntValidator(0,99999999,this));

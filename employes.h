@@ -19,10 +19,10 @@ class Employes
     int age,employes_id;
     int CIN,num_telephone;
     float salaire,heures_de_travail;
-    QDate date_embauche;
+    QDate date_embauche,date_naissance;
 public:
     Employes();
-    Employes(QString,QString,QString,QString,QString,int,int,int,int,float,float,QDate);
+    Employes(QString,QString,QString,QString,QString,int,int,int,float,float,QDate,QDate);
     //getters
         QString getNom() const {return nom;}
         QString getPrenom() const {return prenom;}
@@ -31,11 +31,11 @@ public:
         QString getMotDePasse() const {return mot_de_passe;}
         int getEmployesId() const {return employes_id;}
         int getCIN() const {return CIN;}
-        int getAge() const {return age;}
         int getNumeroTelephone() const {return num_telephone;}
         float getSalaire() const {return salaire;}
         float getHeuresDeTravail() const {return heures_de_travail;}
         QDate getDateEmbauche() const {return date_embauche;}
+        QDate getNaissance() const {return date_naissance;}
 
     //setters
         void setID(int newid){employes_id=newid;}
@@ -50,6 +50,7 @@ public:
         void setSalaire(float newSalaire) { salaire = newSalaire; }
         void setHeuresDeTravail(float newHeuresDeTravail) { heures_de_travail = newHeuresDeTravail; }
         void setDateEmbauche(const QDate& newDateEmbauche) { date_embauche = newDateEmbauche; }
+        void setNaissance(const QDate& newDateNaissance) { date_naissance = newDateNaissance; }
     //methode
         bool ajouter();
         QSqlQueryModel * afficher();
@@ -63,8 +64,10 @@ public:
         QSqlQueryModel* trierParAnneeEmbauche();
         QList<Employes> getAllEmployees();
         QChartView* statistiques();
+        QChartView* statistiquesSalaire();
         int employes_du_mois();
         QSqlQueryModel * afficher_employe_du_mois();
+
 };
 
 #endif // EMPLOYES_H
