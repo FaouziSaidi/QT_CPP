@@ -6,8 +6,8 @@
    <rect>
     <x>0</x>
     <y>0</y>
-    <width>924</width>
-    <height>791</height>
+    <width>926</width>
+    <height>993</height>
    </rect>
   </property>
   <property name="windowTitle">
@@ -66,7 +66,7 @@
       <x>10</x>
       <y>90</y>
       <width>901</width>
-      <height>671</height>
+      <height>981</height>
      </rect>
     </property>
     <property name="styleSheet">
@@ -230,11 +230,14 @@
      <property name="maxLength">
       <number>8</number>
      </property>
+     <property name="placeholderText">
+      <string>+216</string>
+     </property>
     </widget>
     <widget class="QLabel" name="label_6">
      <property name="geometry">
       <rect>
-       <x>510</x>
+       <x>540</x>
        <y>160</y>
        <width>181</width>
        <height>21</height>
@@ -260,7 +263,7 @@
     <widget class="QLineEdit" name="lineEdit_AVIS">
      <property name="geometry">
       <rect>
-       <x>710</x>
+       <x>700</x>
        <y>220</y>
        <width>151</width>
        <height>51</height>
@@ -287,6 +290,15 @@
        <width>113</width>
        <height>22</height>
       </rect>
+     </property>
+     <property name="inputMask">
+      <string/>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="placeholderText">
+      <string>#</string>
      </property>
     </widget>
     <widget class="QLabel" name="label_7">
@@ -318,9 +330,9 @@
     <widget class="QLabel" name="label_8">
      <property name="geometry">
       <rect>
-       <x>510</x>
+       <x>560</x>
        <y>230</y>
-       <width>181</width>
+       <width>131</width>
        <height>21</height>
       </rect>
      </property>
@@ -335,7 +347,7 @@
       <string notr="true">color: rgb(255, 255, 255);</string>
      </property>
      <property name="text">
-      <string>AVIS APPLICATION</string>
+      <string>RECLAMATION</string>
      </property>
      <property name="alignment">
       <set>Qt::AlignCenter</set>
@@ -372,7 +384,7 @@ border-radius: 14px;</string>
     <widget class="QDateEdit" name="dateEdit">
      <property name="geometry">
       <rect>
-       <x>720</x>
+       <x>730</x>
        <y>160</y>
        <width>131</width>
        <height>22</height>
@@ -445,6 +457,132 @@ border-radius: 14px;</string>
       <string>Supprimer</string>
      </property>
     </widget>
+    <widget class="QLabel" name="label_Age">
+     <property name="geometry">
+      <rect>
+       <x>870</x>
+       <y>160</y>
+       <width>21</width>
+       <height>21</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>AGE</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_PDF">
+     <property name="geometry">
+      <rect>
+       <x>80</x>
+       <y>300</y>
+       <width>101</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(10, 164, 84);
+border-radius: 14px;</string>
+     </property>
+     <property name="text">
+      <string>PDF</string>
+     </property>
+    </widget>
+    <widget class="QLabel" name="image_label">
+     <property name="geometry">
+      <rect>
+       <x>390</x>
+       <y>100</y>
+       <width>121</width>
+       <height>111</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string/>
+     </property>
+     <property name="scaledContents">
+      <bool>true</bool>
+     </property>
+     <property name="alignment">
+      <set>Qt::AlignCenter</set>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_Browse">
+     <property name="geometry">
+      <rect>
+       <x>395</x>
+       <y>230</y>
+       <width>111</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(10, 164, 84);
+border-radius: 14px;</string>
+     </property>
+     <property name="text">
+      <string>Parcourir</string>
+     </property>
+    </widget>
+    <widget class="QPushButton" name="pushButton_statistiques">
+     <property name="geometry">
+      <rect>
+       <x>710</x>
+       <y>300</y>
+       <width>131</width>
+       <height>31</height>
+      </rect>
+     </property>
+     <property name="font">
+      <font>
+       <pointsize>12</pointsize>
+       <weight>75</weight>
+       <bold>true</bold>
+      </font>
+     </property>
+     <property name="cursor">
+      <cursorShape>PointingHandCursor</cursorShape>
+     </property>
+     <property name="styleSheet">
+      <string notr="true">color: rgb(255, 255, 255);
+background-color: rgb(10, 164, 84);
+border-radius: 14px;</string>
+     </property>
+     <property name="text">
+      <string>Statistiques</string>
+     </property>
+    </widget>
+    <widget class="QChartView" name="widget" native="true">
+     <property name="geometry">
+      <rect>
+       <x>30</x>
+       <y>630</y>
+       <width>841</width>
+       <height>211</height>
+      </rect>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">
@@ -452,13 +590,21 @@ border-radius: 14px;</string>
     <rect>
      <x>0</x>
      <y>0</y>
-     <width>924</width>
+     <width>926</width>
      <height>26</height>
     </rect>
    </property>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>
+ <customwidgets>
+  <customwidget>
+   <class>QChartView</class>
+   <extends>QWidget</extends>
+   <header>gestion_client.h</header>
+   <container>1</container>
+  </customwidget>
+ </customwidgets>
  <resources/>
  <connections/>
 </ui>

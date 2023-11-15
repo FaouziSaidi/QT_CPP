@@ -11,6 +11,29 @@
 #include <QVariant>
 #include <QObject>
 #include <Qt>
+#include <QTextCursor>
+#include <QPrinter>
+#include <QFileDialog>
+#include <QBuffer>
+#include <QCoreApplication>
+#include <QPixmap>
+#include <QSqlQuery>
+#include <QBuffer>
+
+//MAJD
+#include <QSqlQueryModel>
+#include <QSqlDatabase>
+#include <QSqlQuery>
+#include <QSqlRecord>
+#include <QVariant>
+#include <QObject>
+#include <Qt>
+
+#include <QPalette>
+#include <QDebug>
+
+#include <QtCharts>
+#include <QChartView>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Gestion_client; }
@@ -22,18 +45,25 @@ class Gestion_client : public QMainWindow
 
 public:
     Gestion_client(QWidget *parent = nullptr);
-    void verifierBirthday(const QDate& DATEE);
     ~Gestion_client();
 private slots :
     void on_pushButton_Ajouter_clicked();
     void on_pushButton_Supprimer_clicked();
     void on_pushButton_Modifier_clicked();
     void on_tableView_activated(const QModelIndex &index);
+    //void updatePieChart();
 
     void on_lineEdit_ID_textChanged(const QString &arg1);
+
+    void on_dateEdit_userDateChanged(const QDate &date);
+    void on_pushButton_Browse_clicked();
+    void on_pushButton_PDF_clicked();
 
 private:
     Ui::Gestion_client *ui;
     Client Ctmp;
+    QChartView *chartView;
+
+    void createAgePieChart();
 };
 #endif // GESTION_CLIENT_H

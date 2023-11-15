@@ -13,18 +13,26 @@
 #include <QVariant>
 #include <QObject>
 #include <Qt>
+#include <QTextCursor>
+#include <QPrinter>
+#include <QFileDialog>
+#include <QBuffer>
+#include <QCoreApplication>
+#include <QPixmap>
+
 
 
 class Client
 {
 private:
-    int USER_ID,NUMBER_TELEPHONE;
-    QString NOM,PRENOM,AVIS_APPLICATION,MAIL;
+    int USER_ID,PHONE_NUMBER,AGE;
+    QString NOM,PRENOM,RECLAMATION,MAIL;
     QDate DATEE;
+    QPixmap IMAGE;
 
 public:
     Client();
-    Client (int USER_ID, int NUMBER_TELEPHONE,QString NOM, QString PRENOM,QString AVIS_APPLICATION,QString MAIL,QDate DATEE);
+    Client (int USER_ID, int PHONE_NUMBER,QString NOM, QString PRENOM,QString RECLAMATION,QString MAIL,QDate DATEE, int AGE, QPixmap IMAGE);
 
 
     //METHODS
@@ -32,28 +40,37 @@ public:
         bool ajouter_c();
         bool supprimer_c(int USER_ID);
         QSqlQueryModel * afficher_c();
-        bool modifier_c(int USER_ID, int NUMBER_TELEPHONE,QString NOM, QString PRENOM,QString AVIS_APPLICATION, QString MAIL,QDate DATEE);
+        bool modifier_c(int USER_ID, int PHONE_NUMBER,QString NOM, QString PRENOM,QString RECLAMATION, QString MAIL,QDate DATEE, int AGE, QPixmap IMAGE);
         void rechercher(QTableView * tableView, int);
-        //void birthdayCheck (QDate, INT);
+        int calculateAge (QDate DATEE);
+        bool exportToPDF();
+        void saveImageToDatabase(int userId, QPixmap image);
+        static QMap<QString, int> getClientAges();
+         static void updateAgePieChart();
 
 
-    //getters
+    //Getters
+
        int getUSER_ID();
-       int getNUMBER_TELEPHONE();
+       int getPHONE_NUMBER();
        QDate getDATE();
        QString getNOM();
        QString getPRENOM();
        QString getMAIL();
-       QString getAVIS_APPLICATION();
+       QString getRECLAMATION();
+       int getAGE();
+       QPixmap getImage();
 
-    //setters
+    //Setters
        void setUSER_ID(int USER_ID);
-       void setNUMBER_PHONE(int NUMBER_TELEPHONE);
+       void setNUMBER_PHONE(int PHONE_NUMBER);
        void setNOM (QString NOM);
        void setPRENOM (QString PRENOM);
-       void setAVIS_APPLICATION(QString AVIS_APPLICATION );
+       void setRECLAMATION(QString RECLAMATION );
        void setMAIL (QString MAIL);
        void setDATE (QDate DATEE);
+       void setAGE (int AGE);
+       void setImage(QPixmap IMAGE);
 
 };
 
