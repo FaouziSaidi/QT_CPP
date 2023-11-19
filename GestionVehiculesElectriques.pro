@@ -1,7 +1,8 @@
 QT       += core gui
 QT += sql
 QT += printsupport
-QT += charts
+QT +=charts
+
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 
@@ -22,6 +23,8 @@ SOURCES += \
     gestionvehiculeselectriques.cpp \
     voitureelectrique.cpp
 
+IMAGES += images_voitures/
+
 HEADERS += \
     connection.h \
     gestionvehiculeselectriques.h \
@@ -36,3 +39,6 @@ else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
 
 LIBS += -lQt5Charts
+
+
+

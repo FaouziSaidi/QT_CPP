@@ -4,12 +4,14 @@
 #include <QMainWindow>
 #include "voitureelectrique.h"
 
-class QChartView;
-class QBarSet;
-class QBarSeries;
-class QBarCategoryAxis;
-class QValueAxis;
-class QChart;
+#include <QPushButton>
+#include <QDialog>
+#include <QVBoxLayout>
+#include <QLabel>
+
+#include <QtCharts/QChartView>
+#include <QtCharts/QPieSeries>
+#include <QtCharts/QPieSlice>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class GestionVehiculesElectriques; }
@@ -22,6 +24,11 @@ class GestionVehiculesElectriques : public QMainWindow
 public:
     GestionVehiculesElectriques(QWidget *parent = nullptr);
     ~GestionVehiculesElectriques();
+
+public slots:
+
+    void on_KMeansClusteringButton_clicked();
+
 
 private slots:
     void on_AjouterVoitureBouton_clicked();
@@ -38,12 +45,28 @@ private slots:
 
     void exporterEnPDF();
 
+    void on_ShowMakeStatisticsButton_clicked();
 
+    void on_AfficherDisponiblesButton_clicked();
+
+    void on_onShowStatisticsButton_clicked();
+
+
+    //Pour afficher la photo de la voiture
+
+
+
+
+    void on_TableVehiculesElectriques_doubleClicked(const QModelIndex &index);
+
+    QString getCarMakeStatistics();
 
 private:
     Ui::GestionVehiculesElectriques *ui;
 
     VoitureElectrique voiture; //Slide 34 from powerpoint, used to be able to call function supprimer.
+    QLabel* ImageVoitureLabel;
+
 
 };
 #endif // GESTIONVEHICULESELECTRIQUES_H

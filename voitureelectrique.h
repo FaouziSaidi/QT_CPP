@@ -9,11 +9,12 @@ class VoitureElectrique
     private :
         QString VIN, plaque_immatriculation, marque, modele, etat,charge, maintenance, disponibilite;
         int annee_fabrication;
+        QString photoPath;
 
     public:
         //Constructeurs
         VoitureElectrique(){};//Constructeur classique
-        VoitureElectrique(QString,QString,QString,QString,QString,QString,QString,QString,int);//Constructeur parametré
+        VoitureElectrique(QString,QString,QString,QString,QString,QString,QString,QString,int,QString);//Constructeur parametré
         bool isValidVIN(QString vin);
         bool existe(QString VIN);
 
@@ -31,6 +32,8 @@ class VoitureElectrique
 
         int getAnneeFabrication() {return annee_fabrication;}
 
+        QString getphotoPath(){return photoPath;}
+        QString getPhotoPathForVIN(const QString &VIN) const;
 
         //Setters
         void setVIN(QString v){VIN = v;}
@@ -53,10 +56,17 @@ class VoitureElectrique
         //Métiers supplémentaires
         QSqlQueryModel * trierParAnnee();
         QSqlQueryModel * trierParVIN();
+        QSqlQueryModel * trierParCharge();
+
         QSqlQueryModel *rechercherParMarque (const QString &marque);
+        QSqlQueryModel* afficherVoituresDisponibles();
+        QSqlQueryModel* afficherVoituresAvecMaintenance();
 
+        // Function to fetch MARQUE data from the database
+        QStringList getMarqueData();
 
-
+        // Function to perform K-Means clustering
+        QStringList performKMeansClustering(int numClusters);
 
 
 
