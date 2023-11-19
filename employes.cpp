@@ -6,7 +6,7 @@ Employes::Employes()
 {
 }
 
-Employes::Employes(QString nom, QString prenom, QString Email, QString genre, QString mot_de_passe, int CIN, int num_telephone, int employes_id, float salaire, float heures_de_travail, QDate date_embauche,QDate date_naisaance)
+Employes::Employes(QString nom, QString prenom, QString Email, QString genre, QString mot_de_passe, QString CIN, QString num_telephone, int employes_id, float salaire, float heures_de_travail, QDate date_embauche,QDate date_naisaance)
 {
 
         this->nom = nom;
@@ -27,15 +27,13 @@ bool Employes::ajouter()
 {
     QSqlQuery query;
     QString ch_id = QString::number(employes_id);
-    QString ch_cin = QString::number(CIN);
-    QString ch_num_tel = QString::number(num_telephone);
     QString ch_salaire = QString::number(salaire);
     QString ch_heures_travail = QString::number(heures_de_travail);
 
     query.prepare("INSERT INTO employes (nom, prenom, email, genre, mot_de_passe, cin, num_telephone, employes_id, salaire, heures_de_travail, date_embauche, date_naissance) VALUES (:nom, :prenom, :email, :genre, :mot_de_passe, :cin,:num_telephone, :employes_id, :salaire, :heures_de_travail, :date_embauche,:date_naissance)");
     query.bindValue(":employes_id",ch_id);
-    query.bindValue(":cin",ch_cin);
-    query.bindValue(":num_telephone",ch_num_tel);
+    query.bindValue(":cin",CIN);
+    query.bindValue(":num_telephone",num_telephone);
     query.bindValue(":salaire",ch_salaire);
     query.bindValue(":heures_de_travail",ch_heures_travail );
     query.bindValue(":nom",nom);
@@ -64,11 +62,11 @@ QSqlQueryModel *Employes::afficher()
     model->setHeaderData(3,Qt::Horizontal,QObject::tr("Email"));
     model->setHeaderData(4,Qt::Horizontal,QObject::tr("genre"));
     model->setHeaderData(5,Qt::Horizontal,QObject::tr("mot_de_passe"));
-    model->setHeaderData(9,Qt::Horizontal,QObject::tr("CIN"));
-    model->setHeaderData(10,Qt::Horizontal,QObject::tr("num_telephone"));
-    model->setHeaderData(6,Qt::Horizontal,QObject::tr("salaire"));
-    model->setHeaderData(7,Qt::Horizontal,QObject::tr("heures_de_travail"));
-    model->setHeaderData(8,Qt::Horizontal,QObject::tr("date_embauche"));
+    model->setHeaderData(6,Qt::Horizontal,QObject::tr("CIN"));
+    model->setHeaderData(7,Qt::Horizontal,QObject::tr("num_telephone"));
+    model->setHeaderData(8,Qt::Horizontal,QObject::tr("salaire"));
+    model->setHeaderData(9,Qt::Horizontal,QObject::tr("heures_de_travail"));
+    model->setHeaderData(10,Qt::Horizontal,QObject::tr("date_embauche"));
     model->setHeaderData(11,Qt::Horizontal,QObject::tr("date_naissance"));
     return model;
 }
@@ -138,16 +136,14 @@ bool Employes::modifier()
 {
         QSqlQuery query;
         QString ch_id = QString::number(employes_id);
-        QString ch_cin = QString::number(CIN);
-        QString ch_num_tel = QString::number(num_telephone);
         QString ch_salaire = QString::number(salaire);
         QString ch_heures_travail = QString::number(heures_de_travail);
 
         query.prepare("UPDATE employes SET nom = :nom, prenom = :prenom, email = :email, genre = :genre, mot_de_passe = :mot_de_passe, cin = :cin, num_telephone = :num_telephone, salaire = :salaire, heures_de_travail = :heures_de_travail, date_embauche = :date_embauche, date_naissance = :date_naissance WHERE employes_id = :employes_id");
 
         query.bindValue(":employes_id", ch_id);
-        query.bindValue(":cin", ch_cin);
-        query.bindValue(":num_telephone", ch_num_tel);
+        query.bindValue(":cin", CIN);
+        query.bindValue(":num_telephone", num_telephone);
         query.bindValue(":salaire", ch_salaire);
         query.bindValue(":heures_de_travail", ch_heures_travail);
         query.bindValue(":nom", nom);
@@ -174,8 +170,8 @@ bool Employes::load(int employes_id)
         Email = query.value("email").toString();
         genre = query.value("genre").toString();
         mot_de_passe = query.value("mot_de_passe").toString();
-        CIN = query.value("cin").toInt();
-        num_telephone = query.value("num_telephone").toInt();
+        CIN = query.value("cin").toString();
+        num_telephone = query.value("num_telephone").toString();
         salaire = query.value("salaire").toFloat();
         heures_de_travail = query.value("heures_de_travail").toFloat();
 
@@ -217,11 +213,11 @@ QSqlQueryModel* Employes::trierParAnneeEmbauche()
         model->setHeaderData(3,Qt::Horizontal,QObject::tr("Email"));
         model->setHeaderData(4,Qt::Horizontal,QObject::tr("genre"));
         model->setHeaderData(5,Qt::Horizontal,QObject::tr("mot_de_passe"));
-        model->setHeaderData(9,Qt::Horizontal,QObject::tr("CIN"));
-        model->setHeaderData(10,Qt::Horizontal,QObject::tr("num_telephone"));
-        model->setHeaderData(6,Qt::Horizontal,QObject::tr("salaire"));
-        model->setHeaderData(7,Qt::Horizontal,QObject::tr("heures_de_travail"));
-        model->setHeaderData(8,Qt::Horizontal,QObject::tr("date_embauche"));
+        model->setHeaderData(6,Qt::Horizontal,QObject::tr("CIN"));
+        model->setHeaderData(7,Qt::Horizontal,QObject::tr("num_telephone"));
+        model->setHeaderData(8,Qt::Horizontal,QObject::tr("salaire"));
+        model->setHeaderData(9,Qt::Horizontal,QObject::tr("heures_de_travail"));
+        model->setHeaderData(10,Qt::Horizontal,QObject::tr("date_embauche"));
         model->setHeaderData(11,Qt::Horizontal,QObject::tr("date_naissance"));
         return model;
 }
@@ -241,8 +237,8 @@ QList<Employes> Employes::getAllEmployees()
             QString Email = query.value("email").toString();
             QString genre = query.value("genre").toString();
             QString mot_de_passe = query.value("mot_de_passe").toString();
-            int cin = query.value("cin").toInt();
-            int num_tel = query.value("num_telephone").toInt();
+            QString cin = query.value("cin").toString();
+            QString num_tel = query.value("num_telephone").toString();
             float salaire = query.value("salaire").toFloat();
             float heures_de_travail = query.value("heures_de_travail").toFloat();
             QDate date_embauche = query.value("date_embauche").toDate();
@@ -264,19 +260,19 @@ QChartView* Employes::statistiquesSalaire()
     QSqlQuery query;
     int totalEmployees = 0;
 
-    // Définir les tranches de salaire
+
     int basSalaireCount = 0;
     int moyenSalaireCount = 0;
     int hautSalaireCount = 0;
 
-    // Query the database to count the total number of employees and separate them by salary group
+
     if (query.exec("SELECT COUNT(*) FROM employes")) {
         if (query.next()) {
             totalEmployees = query.value(0).toInt();
         }
     }
 
-    // Comptage des employés dans chaque tranche de salaire
+
     if (query.exec("SELECT COUNT(*) FROM employes WHERE salaire < 3000")) {
         if (query.next()) {
             basSalaireCount = query.value(0).toInt();
@@ -326,12 +322,12 @@ QChartView* Employes::statistiquesSalaire()
 
 
 
-    // Itère sur tous les secteurs et effectue les mêmes modifications
+
     for (QPieSlice *slice : series->slices()) {
         slice->setExploded();
         slice->setLabelVisible();
 
-        // Calcul du pourcentage et mise à jour de l'étiquette
+
         double percentage = slice->percentage();
         QString label = QString("%1 (%2%)").arg(slice->label()).arg(percentage * 100, 0, 'f', 1);
         slice->setLabel(label);
@@ -364,15 +360,6 @@ bool Employes::vin_existe(QString vin)
         return query.exec() && query.first();
 }
 
-
-
-bool Employes::id_reclamation_existe(int id_reclamation)
-{
-    QSqlQuery query;
-    query.prepare("SELECT RECLAMATION_ID FROM RECLAMATION WHERE RECLAMATION_ID = :id_reclamation");
-    query.bindValue(":id_reclamation", id_reclamation);
-    return query.exec() && query.first();
-}
 
 
 QSqlQueryModel * Employes::afficher_employe_du_mois()

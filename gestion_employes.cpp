@@ -38,7 +38,6 @@ gestion_employes::gestion_employes(QWidget *parent)
     ui->setupUi(this);
         ui->tableView->setModel(emp.afficher());
         ui->tableView->resizeColumnsToContents();
-      //  int employes_du_mois=emp.employes_du_mois();
         ui->tableView_2->setModel(emp.afficher_employe_du_mois());
         ui->tableView_2->resizeColumnsToContents();
         ui->cin_e->setValidator(new QIntValidator(0,99999999,this));
@@ -79,9 +78,9 @@ void gestion_employes::on_pushButton_clicked()//ajouter
     QString Email=ui->mail_e->text();
     QString genre = getSelectedGender();
     QString mot_de_passe=ui->mot_de_passe_e->text();
-    int cin=ui->cin_e->text().toInt();
+    QString cin=ui->cin_e->text();
 
-    int num_tel=ui->mail_e_2->text().toInt();
+    QString num_tel=ui->mail_e_2->text();
     int employes_id=ui->employe_id->text().toInt();
     float salaire=ui->salaire->text().toFloat();
     float heures_de_travail=ui->heures_de_travail->text().toFloat();
@@ -126,18 +125,25 @@ void gestion_employes::on_pushButton_clicked()//ajouter
       QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("La date d'embauche ne peut pas être ultérieure à la date actuelle."), QMessageBox::Cancel);
       return;
     }
-    if (cin <= 10000000)
+    if (nom.length() < 3 || prenom.length() < 3)
     {
-       QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le CIN est incorrect"), QMessageBox::Cancel);
-       return;
+        QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le nom et le prénom doivent comporter au moins 3 caractères."), QMessageBox::Cancel);
+        return;
     }
 
-    if (num_tel <= 10000000)
+    if (cin.length() != 8 || num_tel.length() != 8 || !cin.toInt() || !num_tel.toInt())
     {
-       QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le numéro de téléphone est incorrect"), QMessageBox::Cancel);
-       return;
+        QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le CIN et le numéro de téléphone doivent être des nombres de 8 chiffres."), QMessageBox::Cancel);
+        return;
     }
+
     Employes E(nom,prenom,Email,genre, mot_de_passe,cin,num_tel,employes_id,salaire,heures_de_travail,date_embauche,date_naissance);
+
+    if (E.existe()) {
+
+        QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("l'ID de cet employes existe deja."), QMessageBox::Cancel);
+        return;
+    }
     bool test=E.ajouter();
     if(test)
     {
@@ -224,8 +230,8 @@ void gestion_employes::on_modifier_clicked()
        QString Email = ui->mail_e->text();
        QString genre = getSelectedGender();
        QString mot_de_passe = ui->mot_de_passe_e->text();
-       int cin = ui->cin_e->text().toInt();
-       int num_tel = ui->mail_e_2->text().toInt();
+       QString cin = ui->cin_e->text();
+       QString num_tel = ui->mail_e_2->text();
        float salaire = ui->salaire->text().toFloat();
        float heures_de_travail = ui->heures_de_travail->text().toFloat();
        QDate date_embauche = ui->dateEdit->date();
@@ -260,17 +266,21 @@ void gestion_employes::on_modifier_clicked()
          QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("La date d'embauche ne peut pas être ultérieure à la date actuelle."), QMessageBox::Cancel);
          return;
        }
-       if (cin <= 10000000)
+
+       if (nom.length() < 3 || prenom.length() < 3)
        {
-          QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le CIN est incorrect"), QMessageBox::Cancel);
-          return;
+           QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le nom et le prénom doivent comporter au moins 3 caractères."), QMessageBox::Cancel);
+           return;
        }
 
-       if (num_tel <= 10000000)
+       if (cin.length() != 8 || num_tel.length() != 8 || !cin.toInt() || !num_tel.toInt())
        {
-          QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le numéro de téléphone est incorrect"), QMessageBox::Cancel);
-          return;
+           QMessageBox::warning(nullptr, QObject::tr("Erreur"), QObject::tr("Le CIN et le numéro de téléphone doivent être des nombres de 8 chiffres."), QMessageBox::Cancel);
+           return;
        }
+
+
+
        Employes E(nom, prenom, Email, genre, mot_de_passe, cin, num_tel, employes_id, salaire, heures_de_travail, date_embauche,date_naissance);
 
        if (E.existe()) {
@@ -327,8 +337,8 @@ void gestion_employes::on_tableView_doubleClicked(const QModelIndex &index)
                     ui->femme->setChecked(true);
                 }
         ui->mot_de_passe_e->setText(E.getMotDePasse());
-        ui->cin_e->setText(QString::number(E.getCIN()));
-        ui->mail_e_2->setText(QString::number(E.getNumeroTelephone()));
+        ui->cin_e->setText(E.getCIN());
+        ui->mail_e_2->setText(E.getNumeroTelephone());
         ui->employe_id->setText(QString::number(employes_id));
         ui->salaire->setText(QString::number(E.getSalaire()));
         ui->heures_de_travail->setText(QString::number(E.getHeuresDeTravail()));
@@ -383,7 +393,7 @@ void gestion_employes::on_generer_pdf_clicked() {
     Employes e;
     QList<Employes> employees = e.getAllEmployees();
     if (employees.isEmpty()) {
-        // Gérer le cas où aucun employé n'est trouvé dans la base de données
+
         return;
     }
 
@@ -400,70 +410,65 @@ void gestion_employes::on_generer_pdf_clicked() {
     QPainter painter(&pdfWriter);
 
 
-    int y = 30; // Position verticale initiale
+    int y = 30;
 
-    // Ajouter le titre
     QString title = "Liste des Employés";
 
     QFont titleFont;
     titleFont.setPixelSize(150);
-    titleFont.setBold(true); // Rendre le titre en gras
-    titleFont.setItalic(true); // Rendre le titre en italique
-    titleFont.setUnderline(true); // Souligner le titre
+    titleFont.setBold(true);
+    titleFont.setItalic(true);
+    titleFont.setUnderline(true);
 
-    // Dessiner le titre
     painter.setFont(titleFont);
     QColor customColor (8, 150, 124);
     painter.setPen(customColor);
     painter.drawText(0, y, pdfWriter.width(), 200, Qt::AlignCenter, title);
-    y += 350; // Déplacer vers le bas après le titre
+    y += 350;
 
-    // Réinitialiser la couleur du texte à la valeur par défaut (noir)
     painter.setPen(Qt::black);
     QFont font1;
-    font1.setPixelSize(100); // Ajuster la taille de la police
+    font1.setPixelSize(100);
     painter.setFont(font1);
 
-    // Définir les largeurs des colonnes et leurs étiquettes
+
     const int colWidth = 900;
     const QStringList colLabels = {"ID employes", "Nom", "Prénom", "Email", "genre", "telephone", "CIN", "date d'embauche", "date de naissance","Salaire"};
 
-    // Dessiner la première ligne avec les étiquettes de colonnes
+
     for (int i = 0; i < colLabels.size(); i++) {
         QFont font1;
         QColor customColor (17, 178, 149);
         painter.setPen(customColor);
-        font1.setPixelSize(100); // Ajuster la taille de la police
+        font1.setPixelSize(100);
         painter.setFont(font1);
         painter.drawText(i * colWidth+350, y, colWidth, 100, Qt::AlignLeft, colLabels[i]);
     }
-    y += 250; // Déplacement vertical pour les données
-
+    y += 250;
     for (Employes &employee : employees) {
-        // Dessiner une ligne pour chaque employé
+
         painter.setPen(Qt::black);
-        font1.setPixelSize(100); // Ajuster la taille de la police
+        font1.setPixelSize(100);
         painter.setFont(font1);
         for (int i = 0; i < colLabels.size(); i++) {
             painter.drawText(i * colWidth+350, y, colWidth, 100, Qt::AlignLeft, getEmployeeField(employee, i));
         }
-        y += 200; // Déplacement vertical pour la prochaine ligne
+        y += 200;
     }
 
-    // Ajouter la date en haut à droite
     QFont dateFont;
     dateFont.setPixelSize(90);
     painter.setFont(dateFont);
-    painter.setPen(Qt::black); // Définir la couleur de la date en noir
+    painter.setPen(Qt::black);
     QString currentDate = QDate::currentDate().toString("dd-MM-yy");
     painter.drawText(pdfWriter.width() - 600, 10, 400, 100, Qt::AlignRight, currentDate);
 
-    // Ajouter le numéro de la page en bas
-    int pageNumber = 1; // Vous devrez mettre à jour cela si vous avez plusieurs pages
+
+    int pageNumber = 1;
     QFont pageFont;
     pageFont.setPixelSize(90);
     painter.setFont(pageFont);
-    painter.setPen(Qt::black); // Définir la couleur du numéro de page en noir
+    painter.setPen(Qt::black);
     painter.drawText(0, pdfWriter.height() - 300, pdfWriter.width(), 100, Qt::AlignRight, QString("Page %1").arg(pageNumber));
 
     bool exportSuccess = painter.end();
@@ -483,8 +488,8 @@ QString gestion_employes::getEmployeeField(const Employes &employee, int columnI
         case 2: return employee.getPrenom();
         case 3: return employee.getEmail();
         case 4: return employee.getGenre();
-        case 5: return QString::number(employee.getNumeroTelephone());
-        case 6: return QString::number(employee.getCIN());
+        case 5: return employee.getNumeroTelephone();
+        case 6: return employee.getCIN();
         case 7: return employee.getDateEmbauche().toString("yyyy-MM-dd");
         case 9: return QString::number(employee.getSalaire());
         case 8: return employee.getNaissance().toString("yyyy-MM-dd");
@@ -495,12 +500,12 @@ QString gestion_employes::getEmployeeField(const Employes &employee, int columnI
 
 void gestion_employes::on_statistique_clicked()
 {
-    // Appel de la fonction statistiques
+
       QWidget*  View = emp.statistiquesSalaire();
 
-      // Vous pouvez faire d'autres opérations avec le QChartView si nécessaire
+
       View->resize(800, 600);
-      // Exemple de code pour afficher la fenêtre
+
       View->show();
 }
 
@@ -548,7 +553,7 @@ void gestion_employes::on_rendement_clicked()
 {
     QChart *chart = new QChart();
     QBarCategoryAxis *axisX = new QBarCategoryAxis();
-    QBarCategoryAxis *axisY = new QBarCategoryAxis(); // Utilisez QBarCategoryAxis pour l'axe Y
+    QBarCategoryAxis *axisY = new QBarCategoryAxis();
     QChartView *chartView = new QChartView(this);
 
     QSqlQuery query;
@@ -557,16 +562,16 @@ void gestion_employes::on_rendement_clicked()
     if (query.exec()) {
         QBarSeries *series = new QBarSeries();
 
-        int maximumValue = 0; // Initialisez la valeur maximale à zéro
+        int maximumValue = 0;
 
         while (query.next()) {
             int nombreVoitures = query.value("repetitions").toInt();
 
-            // Obtenez le nombre maximum de voitures
+
             maximumValue = std::max(maximumValue, nombreVoitures);
         }
 
-        // Créez une liste de nombres de 1 au nombre maximal de voitures
+
         QStringList yAxisCategories;
         for (int i = 1; i <= maximumValue; ++i) {
             yAxisCategories.append(QString::number(i));
@@ -574,7 +579,7 @@ void gestion_employes::on_rendement_clicked()
 
         axisY->append(yAxisCategories);
 
-        query.exec(); // Réinitialisez la requête pour récupérer les données
+        query.exec();
         while (query.next()) {
             int employeId = query.value("EMPLOYES_ID").toInt();
             int nombreVoitures = query.value("repetitions").toInt();
@@ -595,7 +600,7 @@ void gestion_employes::on_rendement_clicked()
 
         chart->addSeries(series);
         chart->setAxisX(axisX, series);
-        chart->setAxisY(axisY); // Définir l'axe Y pour afficher le nombre de voitures
+        chart->setAxisY(axisY);
         chart->setTitle("Statistiques des voitures gérées par employé");
         chart->setAnimationOptions(QChart::SeriesAnimations);
 
@@ -616,3 +621,23 @@ void gestion_employes::on_rendement_clicked()
 
 
 
+
+void gestion_employes::on_gestion_employes_2_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(0);
+}
+
+void gestion_employes::on_gestion_voitures_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(1);
+}
+
+void gestion_employes::on_gestion_employes_3_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(0);
+}
+
+void gestion_employes::on_gestion_voitures_2_clicked()
+{
+    ui->stackedWidget_2->setCurrentIndex(1);
+}

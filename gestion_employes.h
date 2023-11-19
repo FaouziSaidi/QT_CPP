@@ -56,6 +56,14 @@ private slots:
 
     void on_rendement_clicked();
 
+    void on_gestion_employes_2_clicked();
+
+    void on_gestion_voitures_clicked();
+
+    void on_gestion_employes_3_clicked();
+
+    void on_gestion_voitures_2_clicked();
+
 private:
     Ui::gestion_employes *ui;
     Employes emp;
