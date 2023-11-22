@@ -1,6 +1,7 @@
 #ifndef GESTION_CLIENT_H
 #define GESTION_CLIENT_H
 #include "client.h"
+#include "arduino.h"
 #include <QMainWindow>
 #include <QPushButton>
 #include <QPdfWriter>
@@ -20,7 +21,7 @@
 #include <QSqlQuery>
 #include <QBuffer>
 
-//MAJD
+
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -34,6 +35,9 @@
 
 #include <QtCharts>
 #include <QChartView>
+
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 
 QT_BEGIN_NAMESPACE
 namespace Ui { class Gestion_client; }
@@ -51,18 +55,23 @@ private slots :
     void on_pushButton_Supprimer_clicked();
     void on_pushButton_Modifier_clicked();
     void on_tableView_activated(const QModelIndex &index);
-    //void updatePieChart();
-
     void on_lineEdit_ID_textChanged(const QString &arg1);
-
     void on_dateEdit_userDateChanged(const QDate &date);
     void on_pushButton_Browse_clicked();
     void on_pushButton_PDF_clicked();
+
+    /*void update_label();
+    void on_pushButton_clicked();
+    void on_pushButton_2_clicked();
+    void on_pushButton_3_clicked();
+    void on_pushButton_4_clicked();*/
 
 private:
     Ui::Gestion_client *ui;
     Client Ctmp;
     QChartView *chartView;
+    QByteArray data;
+    //Arduino A;
 
     void createAgePieChart();
 };

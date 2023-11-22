@@ -19,6 +19,8 @@
 #include <QBuffer>
 #include <QCoreApplication>
 #include <QPixmap>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 
 
 

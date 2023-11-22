@@ -26,8 +26,6 @@
 #include <QtDebug>
 #include <QPixmap>
 #include <QSqlQuery>
-
-//ZEDHOM MAJD AWKA
 #include <QSqlQueryModel>
 #include <QSqlDatabase>
 #include <QSqlQuery>
@@ -35,6 +33,8 @@
 #include <QVariant>
 #include <QObject>
 #include <Qt>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 
 #include <QPalette>
 #include <QDebug>
@@ -179,6 +179,7 @@ void Gestion_client::on_pushButton_Ajouter_clicked()
                     ui->dateEdit->clear();
                     ui->image_label->clear();
                     ui->tableView->setModel(Ctmp.afficher_c());
+                    createAgePieChart();
                 }
             }
         }
@@ -267,6 +268,7 @@ void Gestion_client::on_pushButton_Modifier_clicked() {
                             "Click Cancel to exit."), QMessageBox::Cancel);
         }
         ui->tableView->setModel(Ctmp.afficher_c());
+        createAgePieChart();
     }
 }
 
@@ -285,6 +287,7 @@ void Gestion_client::on_pushButton_Modifier_clicked() {
                                       QObject ::tr("suppression non effectue.\n"
                                                    "click cancel to exit."), QMessageBox ::Cancel);
           ui->tableView->setModel(Ctmp.afficher_c());
+          createAgePieChart();
    }
    void Gestion_client::on_tableView_activated(const QModelIndex &index) {
        QString val = ui->tableView->model()->data(index).toString();
@@ -379,37 +382,48 @@ void Gestion_client::on_pushButton_PDF_clicked()
 
 void Gestion_client::createAgePieChart()
 {
+    // Create a new QChart to display the age demographics
     QChart *chart = new QChart();
     chart->setTitle("Client Age Demographics");
 
-    QChartView *chartView = findChild<QChartView*>("widget"); // Assuming you have a QChartView widget with the object name "widget"
+    // Find the QChartView widget with the object name "widget"
+    QChartView *chartView = findChild<QChartView*>("widget");
 
+    // Check if the QChartView widget is found
     if (!chartView)
     {
         qDebug() << "ChartView not found!";
         return;
     }
 
+    // Create a new QPieSeries to hold the age demographic data
     QPieSeries *series = new QPieSeries();
 
     // Get age demographic data from the Client class
     QMap<QString, int> ageData = Client::getClientAges();
 
-    for (const QString &ageRange : ageData.keys()) {
+    // Iterate through the age ranges and add them to the pie chart
+    for (const QString &ageRange : ageData.keys())
+    {
         int count = ageData.value(ageRange);
 
+        // Create a QPieSlice for each age range and add it to the series
         QPieSlice *slice = new QPieSlice(ageRange, count);
         series->append(slice);
     }
 
+    // Add the series to the chart
     chart->addSeries(series);
 
+    // Configure the chart legend visibility and alignment
     chart->legend()->setVisible(true);
     chart->legend()->setAlignment(Qt::AlignBottom);
 
+    // Set the chart to the QChartView widget and enable antialiasing for smoother rendering
     chartView->setChart(chart);
     chartView->setRenderHint(QPainter::Antialiasing);
 }
+
 
 
 

@@ -1,6 +1,8 @@
-QT       += core gui
+QT       += core gui \
+    quick
 QT       += sql
 QT       += charts
+QT += serialport
 QT += core sql printsupport widgets
 
 greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
@@ -20,12 +22,14 @@ DEFINES += QT_DEPRECATED_WARNINGS
 
 SOURCES += \
     Connection.cpp \
+    arduino.cpp \
     client.cpp \
     main.cpp \
     gestion_client.cpp
 
 HEADERS += \
     Connection.h \
+    arduino.h \
     client.h \
     gestion_client.h
 

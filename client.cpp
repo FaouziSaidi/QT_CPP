@@ -20,52 +20,62 @@
 #include <QFileDialog>
 #include <Qt>
 #include <QPixmap>
+#include <QtSerialPort/QSerialPort>
+#include <QtSerialPort/QSerialPortInfo>
 
-
+// Constructor for the Client class
 Client::Client()
 {
 
 }
 
-Client::Client (int USER_ID, int PHONE_NUMBER,QString NOM, QString PRENOM,QString RECLAMATION,QString MAIL,QDate DATEE, int AGE, QPixmap IMAGE)
+// Parameterized constructor for the Client class
+Client::Client(int USER_ID, int PHONE_NUMBER, QString NOM, QString PRENOM, QString RECLAMATION, QString MAIL, QDate DATEE, int AGE, QPixmap IMAGE)
 {
-    this->USER_ID=USER_ID;
-    this->PHONE_NUMBER=PHONE_NUMBER;
-    this->NOM=NOM;
-    this->PRENOM=PRENOM;
-    this->RECLAMATION=RECLAMATION;
-    this->MAIL=MAIL;
-    this->DATEE=DATEE;
-    this->AGE=AGE;
-    this->IMAGE=IMAGE;
+    // Initializing member variables with provided values
+    this->USER_ID = USER_ID;
+    this->PHONE_NUMBER = PHONE_NUMBER;
+    this->NOM = NOM;
+    this->PRENOM = PRENOM;
+    this->RECLAMATION = RECLAMATION;
+    this->MAIL = MAIL;
+    this->DATEE = DATEE;
+    this->AGE = AGE;
+    this->IMAGE = IMAGE;
 }
 
-bool Client::supprimer_c (int USER_ID)
+// Method to remove a client from the database based on USER_ID
+bool Client::supprimer_c(int USER_ID)
 {
-        QSqlQuery query;
-         query.prepare("Delete from Client where USER_ID= :USER_ID");
-         query.bindValue(":USER_ID",USER_ID);
-         return query.exec();
+    QSqlQuery query;
+    query.prepare("Delete from Client where USER_ID= :USER_ID");
+    query.bindValue(":USER_ID", USER_ID);
+    return query.exec();
 }
 
+// Method to calculate age based on the provided birthdate (DATEE)
 int Client::calculateAge(QDate DATEE)
 {
     AGE = DATEE.daysTo(QDate::currentDate()) / 365; // Approximate age in years
     return AGE;
 }
 
-bool Client::ajouter_c() {
+// Method to add a client to the database
+bool Client::ajouter_c()
+{
     QSqlQuery query;
 
+    // Convert USER_ID to string for binding
     QString res = QString::number(USER_ID);
 
-    // Convert the QPixmap to a QByteArray
+    // Convert the QPixmap to a QByteArray for storing in the database
     QByteArray byteArray;
     QBuffer buffer(&byteArray);
     buffer.open(QIODevice::WriteOnly);
     IMAGE.save(&buffer, "PNG"); // You can adjust the format as needed
     buffer.close();
 
+    // Prepare and bind values for the SQL query
     query.prepare("insert into Client (USER_ID,NOM,PRENOM,DATEE,PHONE_NUMBER,MAIL,RECLAMATION,AGE,IMAGE) values(:USER_ID,:NOM,:PRENOM,:DATEE,:PHONE_NUMBER,:MAIL,:RECLAMATION,:AGE,:IMAGE)");
     query.bindValue(":USER_ID", res);
     query.bindValue(":NOM", NOM);
@@ -75,12 +85,15 @@ bool Client::ajouter_c() {
     query.bindValue(":MAIL", MAIL);
     query.bindValue(":RECLAMATION", RECLAMATION);
     query.bindValue(":AGE", AGE);
-    query.bindValue(":IMAGE", byteArray); // Use the QByteArray for image data
-    return query.exec(); // envoyer la requete pour executer
+    query.bindValue(":IMAGE", byteArray);
+
+    // Execute the query and return the result
+    return query.exec();
 }
 
-
-bool Client::exportToPDF() {
+// Method to export client data to a PDF file
+bool Client::exportToPDF()
+{
     // Assuming you have already connected to your database
     QSqlQuery query("SELECT * FROM Client");
 
@@ -102,9 +115,6 @@ bool Client::exportToPDF() {
                       "<th style='border: 1px solid #ddd; padding: 8px; text-align: left;'>Age</th>"
                       "</tr>");
 
-    // Iterate over the results and append them to the QTextDocument as a styled table
-    // Iterate over the results and append them to the QTextDocument as a styled table
-    // Iterate over the results and append them to the QTextDocument as a styled table
     // Iterate over the results and append them to the QTextDocument as a styled table
     while (query.next()) {
         QString user_id = query.value("USER_ID").toString();
@@ -132,50 +142,54 @@ bool Client::exportToPDF() {
     // Close the table tag
     cursor.insertHtml("</table><br>");
 
-
-
+    // Get the file path for saving the PDF
     QString filePath = QFileDialog::getSaveFileName(nullptr, "Save PDF", "", "PDF Files (*.pdf)");
 
-        if (!filePath.isEmpty()) {
-            // Create a QPrinter
-            QPrinter printer(QPrinter::HighResolution);
-            printer.setOutputFormat(QPrinter::PdfFormat);
-            printer.setOutputFileName(filePath);
+    // If a file path is provided, create a QPrinter and print the QTextDocument to the PDF file
+    if (!filePath.isEmpty()) {
+        QPrinter printer(QPrinter::HighResolution);
+        printer.setOutputFormat(QPrinter::PdfFormat);
+        printer.setOutputFileName(filePath);
+        document.print(&printer);
+        return true;
+    }
 
-            // Print the QTextDocument to the PDF file
-            document.print(&printer);
-            return true;
-        }
-
-        return false;
+    // Return false if no file path is provided
+    return false;
 }
 
-
-
-QSqlQueryModel * Client :: afficher_c()
+// Method to retrieve client data for display in a QTableView
+QSqlQueryModel *Client::afficher_c()
 {
-    QSqlQueryModel * model=new QSqlQueryModel();
+    QSqlQueryModel *model = new QSqlQueryModel();
 
+    // Fetch data from the Client table and order by NOM
     model->setQuery("select * from Client ORDER BY NOM");
-    model->setHeaderData(0,Qt::Horizontal,QObject::tr("USER_ID"));
-    model->setHeaderData(1,Qt::Horizontal,QObject::tr("NOM"));
-    model->setHeaderData(2,Qt::Horizontal,QObject::tr("PRENOM"));
-    model->setHeaderData(3,Qt::Horizontal,QObject::tr("DATEE"));
-    model->setHeaderData(4,Qt::Horizontal,QObject::tr("TELEPHONE_NUMBER"));
-    model->setHeaderData(5,Qt::Horizontal,QObject::tr("MAIL"));
-    model->setHeaderData(6,Qt::Horizontal,QObject::tr("RECLAMATION"));
-    model->setHeaderData(7,Qt::Horizontal,QObject::tr("AGE"));
-    model->setHeaderData(8,Qt::Horizontal,QObject::tr("IMAGE"));
+
+    // Set header data for the QTableView
+    model->setHeaderData(0, Qt::Horizontal, QObject::tr("USER_ID"));
+    model->setHeaderData(1, Qt::Horizontal, QObject::tr("NOM"));
+    model->setHeaderData(2, Qt::Horizontal, QObject::tr("PRENOM"));
+    model->setHeaderData(3, Qt::Horizontal, QObject::tr("DATEE"));
+    model->setHeaderData(4, Qt::Horizontal, QObject::tr("TELEPHONE_NUMBER"));
+    model->setHeaderData(5, Qt::Horizontal, QObject::tr("MAIL"));
+    model->setHeaderData(6, Qt::Horizontal, QObject::tr("RECLAMATION"));
+    model->setHeaderData(7, Qt::Horizontal, QObject::tr("AGE"));
+    model->setHeaderData(8, Qt::Horizontal, QObject::tr("IMAGE"));
+
+    // Return the model containing client data
     return model;
 }
 
-
+// Method to modify client data in the database based on USER_ID
 bool Client::modifier_c(int USER_ID, int PHONE_NUMBER, QString NOM, QString PRENOM, QString RECLAMATION, QString MAIL, QDate DATEE, int AGE, QPixmap IMAGE)
 {
     QSqlQuery query;
 
-    // Assuming that 'IMAGE' is the name of the column in your database
+    // Prepare the SQL query to update client data
     query.prepare("UPDATE CLIENT SET USER_ID=:USER_ID, NOM=:NOM, PRENOM=:PRENOM,  DATEE=:DATEE, PHONE_NUMBER=:PHONE_NUMBER, MAIL=:MAIL, RECLAMATION=:RECLAMATION, AGE=:AGE, IMAGE=:IMAGE WHERE USER_ID=:USER_ID");
+
+    // Bind values for the SQL query
     query.bindValue(":NOM", NOM);
     query.bindValue(":PRENOM", PRENOM);
     query.bindValue(":USER_ID", USER_ID);
@@ -192,23 +206,28 @@ bool Client::modifier_c(int USER_ID, int PHONE_NUMBER, QString NOM, QString PREN
     IMAGE.save(&buffer, "PNG"); // You can adjust the format as needed
     query.bindValue(":IMAGE", byteArray);
 
+    // Execute the query and return the result
     return query.exec();
 }
 
-void Client::rechercher(QTableView * tableView, int USER_ID)
+// Method to search for a client by USER_ID and display in a QTableView
+void Client::rechercher(QTableView *tableView, int USER_ID)
 {
-    QSqlQueryModel *model= new QSqlQueryModel();
-    QString USER_ID_string=QString::number(USER_ID);
-    QSqlQuery *query=new QSqlQuery;
-    query->prepare("select * from CLIENT where USER_ID like '%"+USER_ID_string+"%' ;");
+    QSqlQueryModel *model = new QSqlQueryModel();
+    QString USER_ID_string = QString::number(USER_ID);
+    QSqlQuery *query = new QSqlQuery;
+
+    // Prepare and execute the query to search for a client by USER_ID
+    query->prepare("select * from CLIENT where USER_ID like '%" + USER_ID_string + "%' ;");
     query->exec();
     model->setQuery(*query);
+
+    // Set the model for the QTableView and display
     tableView->setModel(model);
     tableView->show();
 }
 
-// Add this method to your Client class in client.cpp
-
+// Method to retrieve and categorize client ages for charting
 QMap<QString, int> Client::getClientAges()
 {
     QMap<QString, int> ageData;
@@ -235,55 +254,53 @@ QMap<QString, int> Client::getClientAges()
         ageData[ageRange]++;
     }
 
+    // Return the categorized age data
     return ageData;
 }
-/*
-void Client::updateAgePieChart()
-{
-    // Emit a signal to notify the GUI that a new client has been added
-    emit agePieChartUpdated();
-}*/
 
+// Getter methods to retrieve member variables
+int Client::getUSER_ID() { return USER_ID; }
+int Client::getPHONE_NUMBER() { return PHONE_NUMBER; }
+QDate Client::getDATE() { return DATEE; }
+QString Client::getNOM() { return NOM; }
+QString Client::getPRENOM() { return PRENOM; }
+QString Client::getMAIL() { return MAIL; }
+QString Client::getRECLAMATION() { return RECLAMATION; }
+int Client::getAGE() { return AGE; }
+QPixmap Client::getImage() { return IMAGE; }
 
-//Getters
-int Client::getUSER_ID(){return USER_ID;}
-int Client::getPHONE_NUMBER(){return PHONE_NUMBER;}
-QDate Client::getDATE(){return DATEE;}
-QString Client::getNOM(){return NOM;}
-QString Client::getPRENOM(){return PRENOM;}
-QString Client::getMAIL(){return MAIL;}
-QString Client::getRECLAMATION(){return RECLAMATION;}
-int Client::getAGE(){return AGE;}
-QPixmap Client::getImage() {return IMAGE;}
+// Setter methods to set member variables
+void Client::setUSER_ID(int USER_ID) {
+    this->USER_ID = USER_ID;
+}
+void Client::setNUMBER_PHONE(int PHONE_NUMBER) {
+    this->PHONE_NUMBER = PHONE_NUMBER;
+}
+void Client::setNOM(QString NOM) {
+    this->NOM = NOM;
+}
+void Client::setPRENOM(QString PRENOM) {
+    this->PRENOM = PRENOM;
+}
+void Client::setRECLAMATION(QString RECLAMATION) {
+    this->RECLAMATION = RECLAMATION;
+}
 
-
-
-//Setters
-void Client::setUSER_ID(int USER_ID){
-    this->USER_ID=USER_ID;
-    }
-void Client::setNUMBER_PHONE(int PHONE_NUMBER){
-    this->PHONE_NUMBER=PHONE_NUMBER;
-    }
-void Client::setNOM (QString NOM){
-    this->NOM=NOM;
-    }
-void Client::setPRENOM (QString PRENOM){
-    this->PRENOM=PRENOM;
-    }
-void Client::setRECLAMATION(QString RECLAMATION ){
-    this->RECLAMATION=RECLAMATION;
-    }
-
-void Client::setMAIL (QString MAIL){
-    this->MAIL=MAIL;
-    }
-void Client::setDATE (QDate DATEE){
-    this->DATEE=DATEE;
-    }
-void Client::setAGE(int AGE){
-    this-> AGE=AGE;
+void Client::setMAIL(QString MAIL) {
+    this->MAIL = MAIL;
+}
+void Client::setDATE(QDate DATEE) {
+    this->DATEE = DATEE;
+}
+void Client::setAGE(int AGE) {
+    this->AGE = AGE;
 }
 void Client::setImage(QPixmap IMAGE) {
     this->IMAGE = IMAGE;
 }
+
+
+
+
+
+

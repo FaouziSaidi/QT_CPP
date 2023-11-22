@@ -38,7 +38,7 @@
      <string notr="true">color: rgb(255, 255, 255);</string>
     </property>
     <property name="text">
-     <string>Gestion Client:</string>
+     <string>Gestion Client</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>
@@ -356,7 +356,7 @@
     <widget class="QPushButton" name="pushButton_Ajouter">
      <property name="geometry">
       <rect>
-       <x>240</x>
+       <x>540</x>
        <y>300</y>
        <width>101</width>
        <height>31</height>
@@ -404,7 +404,7 @@ border-radius: 14px;</string>
     <widget class="QPushButton" name="pushButton_Modifier">
      <property name="geometry">
       <rect>
-       <x>400</x>
+       <x>260</x>
        <y>300</y>
        <width>101</width>
        <height>31</height>
@@ -432,7 +432,7 @@ border-radius: 14px;</string>
     <widget class="QPushButton" name="pushButton_Supprimer">
      <property name="geometry">
       <rect>
-       <x>550</x>
+       <x>690</x>
        <y>300</y>
        <width>111</width>
        <height>31</height>
@@ -473,7 +473,7 @@ border-radius: 14px;</string>
     <widget class="QPushButton" name="pushButton_PDF">
      <property name="geometry">
       <rect>
-       <x>80</x>
+       <x>100</x>
        <y>300</y>
        <width>101</width>
        <height>31</height>
@@ -501,11 +501,14 @@ border-radius: 14px;</string>
     <widget class="QLabel" name="image_label">
      <property name="geometry">
       <rect>
-       <x>390</x>
-       <y>100</y>
-       <width>121</width>
-       <height>111</height>
+       <x>370</x>
+       <y>90</y>
+       <width>151</width>
+       <height>141</height>
       </rect>
+     </property>
+     <property name="frameShape">
+      <enum>QFrame::StyledPanel</enum>
      </property>
      <property name="text">
       <string/>
@@ -521,7 +524,7 @@ border-radius: 14px;</string>
      <property name="geometry">
       <rect>
        <x>395</x>
-       <y>230</y>
+       <y>240</y>
        <width>111</width>
        <height>31</height>
       </rect>
@@ -543,34 +546,6 @@ border-radius: 14px;</string>
      </property>
      <property name="text">
       <string>Parcourir</string>
-     </property>
-    </widget>
-    <widget class="QPushButton" name="pushButton_statistiques">
-     <property name="geometry">
-      <rect>
-       <x>710</x>
-       <y>300</y>
-       <width>131</width>
-       <height>31</height>
-      </rect>
-     </property>
-     <property name="font">
-      <font>
-       <pointsize>12</pointsize>
-       <weight>75</weight>
-       <bold>true</bold>
-      </font>
-     </property>
-     <property name="cursor">
-      <cursorShape>PointingHandCursor</cursorShape>
-     </property>
-     <property name="styleSheet">
-      <string notr="true">color: rgb(255, 255, 255);
-background-color: rgb(10, 164, 84);
-border-radius: 14px;</string>
-     </property>
-     <property name="text">
-      <string>Statistiques</string>
      </property>
     </widget>
     <widget class="QChartView" name="widget" native="true">
