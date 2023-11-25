@@ -571,6 +571,19 @@ border-radius: 14px;</string>
       <string>gestion voitures</string>
      </property>
     </widget>
+    <widget class="QPushButton" name="gestion_employee2">
+     <property name="geometry">
+      <rect>
+       <x>640</x>
+       <y>30</y>
+       <width>111</width>
+       <height>28</height>
+      </rect>
+     </property>
+     <property name="text">
+      <string>gestion employee</string>
+     </property>
+    </widget>
    </widget>
   </widget>
   <widget class="QMenuBar" name="menubar">

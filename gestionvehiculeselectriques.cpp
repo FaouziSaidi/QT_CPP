@@ -32,6 +32,9 @@ GestionVehiculesElectriques::GestionVehiculesElectriques(QWidget *parent)
     QPushButton *gestion_employes = new QPushButton("gestion_voitures", this);
         connect(gestion_employes, &QPushButton::clicked, this, &GestionVehiculesElectriques::on_gestion_employes_2_clicked);
 
+        QPushButton *gestion_client = new QPushButton("gestion_client_3", this);
+            connect(gestion_client, &QPushButton::clicked, this, &GestionVehiculesElectriques::on_gestion_client_3_clicked);
+
 
     ui->setupUi(this);
     ImageVoitureLabel = new QLabel(this);
@@ -508,4 +511,13 @@ void GestionVehiculesElectriques::on_gestion_employes_2_clicked()
     this->hide();
     gestion_employes *ww = new gestion_employes();
     ww->show();
+}
+
+
+
+void GestionVehiculesElectriques::on_gestion_client_3_clicked()
+{
+    this->hide();
+    Gestion_client *wc = new Gestion_client();
+    wc->show();
 }

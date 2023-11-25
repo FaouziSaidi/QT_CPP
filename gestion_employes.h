@@ -63,7 +63,7 @@ private slots:
     void on_gestion_voitures_clicked();
 
     void on_gestion_client_clicked();
-     void on_gestion_voitures2_clicked();
+
 
 private:
     Ui::gestion_employes *ui;

@@ -712,6 +712,27 @@ border-radius:15px;
      </size>
     </property>
    </widget>
+   <widget class="QPushButton" name="gestion_client_3">
+    <property name="geometry">
+     <rect>
+      <x>30</x>
+      <y>240</y>
+      <width>131</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="styleSheet">
+     <string notr="true">border-radius: 20px;
+font: 7pt &quot;MS Shell Dlg 2&quot;;
+
+color: rgb(255, 255, 255);
+background-color: rgb(7, 165, 141);
+</string>
+    </property>
+    <property name="text">
+     <string>gestion clients</string>
+    </property>
+   </widget>
    <zorder>label_11</zorder>
    <zorder>TableVehiculesElectriques</zorder>
    <zorder>label</zorder>
@@ -750,6 +771,7 @@ border-radius:15px;
    <zorder>gestion_employes_2</zorder>
    <zorder>gestion_voitures</zorder>
    <zorder>pushButton_5</zorder>
+   <zorder>gestion_client_3</zorder>
   </widget>
   <widget class="QStatusBar" name="statusbar"/>
  </widget>

@@ -47,6 +47,14 @@
 
 Gestion_client::Gestion_client(QWidget *parent): QMainWindow(parent), ui(new Ui::Gestion_client)
 {
+    QPushButton *gestion_voitures = new QPushButton("gestion_voitures2", this);
+         connect(gestion_voitures, &QPushButton::clicked, this, &Gestion_client::on_gestion_voitures2_clicked);
+
+         QPushButton *gestion_employes = new QPushButton("gestion_employee2", this);
+             connect(gestion_employes, &QPushButton::clicked, this, &Gestion_client::on_gestion_employee2_clicked);
+
+
+
     ui->setupUi(this);
     ui->tableView->setModel(Ctmp.afficher_c());
 
@@ -427,13 +435,23 @@ void Gestion_client::createAgePieChart()
 }
 
 
-void gestion_employes::on_gestion_voitures2_clicked()
+
+
+
+
+
+
+
+void Gestion_client::on_gestion_voitures2_clicked()
 {
     this->hide();
     GestionVehiculesElectriques *ww = new GestionVehiculesElectriques();
     ww->show();
 }
 
-
-
-
+void Gestion_client::on_gestion_employee2_clicked()
+{
+    this->hide();
+    gestion_employes *ww = new gestion_employes();
+    ww->show();
+}

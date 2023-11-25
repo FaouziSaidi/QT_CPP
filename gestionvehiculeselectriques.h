@@ -67,6 +67,10 @@ private slots:
 
     void on_gestion_employes_2_clicked();
 
+
+
+    void on_gestion_client_3_clicked();
+
 private:
     Ui::GestionVehiculesElectriques *ui;
 
