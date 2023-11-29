@@ -44,6 +44,22 @@ Client::Client(int USER_ID, int PHONE_NUMBER, QString NOM, QString PRENOM, QStri
     this->IMAGE = IMAGE;
 }
 
+
+bool Client::rechercherID(int USER_ID)
+{
+    QSqlQuery *query=new QSqlQuery;
+    query->prepare("SELECT 1 FROM CLIENT WHERE USER_ID = :USER_ID");
+    query->bindValue(":USER_ID",USER_ID);
+
+    if (query->exec() && query->next())
+    {
+            // The ID exists in the database
+            return true;
+        } else {
+            // The ID does not exist in the database
+            return false;
+        }
+}
 // Method to remove a client from the database based on USER_ID
 bool Client::supprimer_c(int USER_ID)
 {

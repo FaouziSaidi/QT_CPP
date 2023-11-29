@@ -1,23 +1,32 @@
-/*#include "arduino.h"
+#include "arduino.h"
+#include <QDebug>
 
-class ArduinoData : public QSharedData
+Arduino::Arduino()
 {
-public:
+data="";
+arduino_port_name="";
+arduino_is_available=false;
+serial=new QSerialPort;
+}
 
-};*/
-/*
-Arduino::Arduino() : data(new ArduinoData)
-{
+QString Arduino:: getarduino_port_name(){
+    return arduino_port_name;
+}
 
-}*/
-/*
+QSerialPort* Arduino::getserial(){
+    return serial;
+}
+
 int Arduino::connect_arduino()
 {
     //Recherche du port sur lequel la carte arduino identifiee par arduino_uno_vendor_id
     //est connectee
-    foreach (const QSerialPortInfo &serial_port_into, QSerialPortInfo::availablePorts()){
-        if (serial_port_into.hasVendorIdentifier() && serial_port_into.hasProductIdentifier()){
-            if(serial_port_into.vendorIdentifier()==arduino_uno_vendor_id && serial_port_into.productIdentifier()==arduino_uno_producy_id){
+    foreach (const QSerialPortInfo &serial_port_into, QSerialPortInfo::availablePorts())
+     {
+        if (serial_port_into.hasVendorIdentifier() && serial_port_into.hasProductIdentifier())
+        {
+            if(serial_port_into.vendorIdentifier()==arduino_uno_vendor_id && serial_port_into.productIdentifier()==arduino_uno_producy_id)
+            {
                 arduino_is_available=true;
                 arduino_port_name=serial_port_into.portName();
             }
@@ -25,7 +34,8 @@ int Arduino::connect_arduino()
     }
     qDebug() << "arduino_port_name is: " << arduino_port_name;
                 if (arduino_is_available)
-                { //configuration de la communication (debit..)
+                {
+                    //configuration de la communication (debit..)
                     serial->setPortName(arduino_port_name);
                     if(serial->open(QSerialPort::ReadWrite))
                     {
@@ -38,6 +48,8 @@ int Arduino::connect_arduino()
                     }
                  return 1;
                 }
+
+                return -1;
 }
 
 int Arduino::close_arduino()
@@ -50,15 +62,8 @@ int Arduino::close_arduino()
 return 1;
 }
 
-QByteArray Arduino::read_from_arduino(){
-if (serial->isReadable())
-//{
-    data=serial->readAll(); //recuperer les donnees recues
-return data;
-//}
-}
-
-int Arduino::write_to_arduino(QByteArray d){
+int Arduino::write_to_arduino(QByteArray d)
+{
     if(serial->isWritable()){
          serial->write(d); //envoyer des donnes vers Arduino
     }
@@ -68,21 +73,11 @@ int Arduino::write_to_arduino(QByteArray d){
 }
 
 
-
-
-Arduino::Arduino(const Arduino &rhs) : data(rhs.data)
+QString Arduino::read_from_arduino(){
+if (serial->isReadable())
 {
-
+    data=serial->readAll(); //recuperer les donnees recues
+    return data;
+}
 }
 
-Arduino &Arduino::operator=(const Arduino &rhs)
-{
-    if (this != &rhs)
-        data.operator=(rhs.data);
-    return *this;
-}
-
-Arduino::~Arduino()
-{
-
-}*/

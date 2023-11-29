@@ -60,18 +60,16 @@ private slots :
     void on_pushButton_Browse_clicked();
     void on_pushButton_PDF_clicked();
 
-    /*void update_label();
-    void on_pushButton_clicked();
-    void on_pushButton_2_clicked();
-    void on_pushButton_3_clicked();
-    void on_pushButton_4_clicked();*/
+    //void updateLineEdit();
+    void update_label();
+    void on_pushButton_Open_clicked();
 
 private:
     Ui::Gestion_client *ui;
     Client Ctmp;
     QChartView *chartView;
-    QByteArray data;
-    //Arduino A;
+    Arduino A;
+    QString data;
 
     void createAgePieChart();
 };

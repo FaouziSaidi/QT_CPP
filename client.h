@@ -49,6 +49,7 @@ public:
         void saveImageToDatabase(int userId, QPixmap image);
         static QMap<QString, int> getClientAges();
          static void updateAgePieChart();
+         bool rechercherID(int USER_ID);
 
 
     //Getters

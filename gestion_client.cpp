@@ -35,7 +35,7 @@
 #include <Qt>
 #include <QtSerialPort/QSerialPort>
 #include <QtSerialPort/QSerialPortInfo>
-
+#include <QTimer>
 #include <QPalette>
 #include <QDebug>
 
@@ -43,42 +43,98 @@
 #include <QChartView>
 
 
-Gestion_client::Gestion_client(QWidget *parent): QMainWindow(parent), ui(new Ui::Gestion_client)
+Gestion_client::Gestion_client(QWidget *parent)
+    : QMainWindow(parent)
+    , ui(new Ui::Gestion_client)
 {
     ui->setupUi(this);
-    ui->tableView->setModel(Ctmp.afficher_c());
+    int ret= A.connect_arduino();
+        switch (ret)
+        {
+        case (0):
+            qDebug ()<< "arduino is available and connected to: "<<A.getarduino_port_name();
+            break;
+        case (1):
+            qDebug ()<< "arduino is available but not connected to: "<<A.getarduino_port_name();
+            break;
+        case (-1):
+            qDebug ()<< "arduino is not available nor connected to: ";
+            break;
+        }
+       QObject::connect(A.getserial(), SIGNAL(readyRead()), this, SLOT(update_label()));
 
+    ui->tableView->setModel(Ctmp.afficher_c());
+    QTimer *timer = new QTimer(this);
+    //connect(timer, SIGNAL(timeout()), this, SLOT(updateLineEdit()));
+    timer->start(500); //Adjust the interval as needed (e.g., every second)
     chartView=new QtCharts::QChartView(this);
     chartView->setRenderHint(QPainter::Antialiasing);
     createAgePieChart();
+
 }
-/*
-// Modify this in your gestion_client.cpp file
-Gestion_client::Gestion_client(QWidget *parent) : QMainWindow(parent), ui(new Ui::Gestion_client)
-{
-    ui->setupUi(this);
-    ui->tableView->setModel(Ctmp.afficher_c());
 
-    chartView = new QtCharts::QChartView(this);
-    chartView->setRenderHint(QPainter::Antialiasing);
-    createAgePieChart();
-
-    // Connect the signal to the slot
-    connect(&Ctmp, &Client::agePieChartUpdated, this, &Gestion_client::updatePieChart);
-}*/
-
-/*
-void Gestion_client::updatePieChart()
-{
-    // Recreate the pie chart whenever the signal is emitted
-    createAgePieChart();
-}*/
 
 Gestion_client::~Gestion_client()
 {
     delete ui;
 
 }
+
+
+
+
+void Gestion_client::on_pushButton_Open_clicked()
+{
+    int id=ui->lineEdit_ID->text().toInt();
+          if (id==NULL)
+          {
+              QMessageBox::information(this, tr("Empty Field"),
+                  tr("Please enter a Number."));
+              return;
+          }
+          else if (Ctmp.rechercherID(id))
+            {
+                //ui->tableView->setModel(Ctmp.rechercher(QTableView *tableView, id));
+              QMessageBox::information(this, tr("Ok"),
+                  tr("ID FOUND able to open the door."));
+            }
+          else
+          {
+              QMessageBox::critical(this, tr("NO"),
+                  tr("ID NOT FOUND, unable to open the door:(((((."));
+      }
+}
+/*
+void Gestion_client::updateLineEdit() {
+
+    QString data = A.read_from_arduino();
+    if (!data.isEmpty()) {
+        accumulatedData+=data;
+        ui->lineEdit_ID->setText(accumulatedData); // Use append instead of setText
+    }
+}*/
+
+void Gestion_client::update_label() {
+    QByteArray data = A.getserial()->readAll();
+    QString receivedData = QString::fromUtf8(data);
+
+    if (receivedData == "K") {
+        // Simulate a button click to open the door
+        on_pushButton_Open_clicked();
+    } else if (receivedData == "S") {
+        // Delete a character from LineEdit_ID
+        QString currentText = ui->lineEdit_ID->text();
+        if (!currentText.isEmpty()) {
+            currentText.chop(1);  // Remove the last character
+            ui->lineEdit_ID->setText(currentText);
+        }
+    } else {
+        // Append received data to LineEdit_ID
+        ui->lineEdit_ID->setText(ui->lineEdit_ID->text() + receivedData);
+    }
+}
+
+
 
 void Gestion_client::on_pushButton_Ajouter_clicked()
 {
@@ -183,9 +239,6 @@ void Gestion_client::on_pushButton_Ajouter_clicked()
                 }
             }
         }
-
-
-
 
 
 void Gestion_client::on_pushButton_Modifier_clicked() {
