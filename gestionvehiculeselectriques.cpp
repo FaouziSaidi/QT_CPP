@@ -15,9 +15,11 @@
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
 #include <QPixmap>
+#include <QWidget>
 #include "gestionvehiculeselectriques.h"
 #include "ui_gestionvehiculeselectriques.h"
 #include "voitureelectrique.h"
+#include "gestion_employes.h"
 
 QT_CHARTS_USE_NAMESPACE
 using namespace QtCharts;
@@ -26,6 +28,14 @@ GestionVehiculesElectriques::GestionVehiculesElectriques(QWidget *parent)
     : QMainWindow(parent)
     , ui(new Ui::GestionVehiculesElectriques)
 {
+
+    QPushButton *gestion_employes = new QPushButton("gestion_voitures", this);
+        connect(gestion_employes, &QPushButton::clicked, this, &GestionVehiculesElectriques::on_gestion_employes_2_clicked);
+
+        QPushButton *gestion_client = new QPushButton("gestion_client_3", this);
+            connect(gestion_client, &QPushButton::clicked, this, &GestionVehiculesElectriques::on_gestion_client_3_clicked);
+
+
     ui->setupUi(this);
     ImageVoitureLabel = new QLabel(this);
     ui->TableVehiculesElectriques->setModel(voiture.afficher());
@@ -494,3 +504,20 @@ void GestionVehiculesElectriques::on_TableVehiculesElectriques_doubleClicked(con
 
 
 
+
+
+void GestionVehiculesElectriques::on_gestion_employes_2_clicked()
+{
+    this->hide();
+    gestion_employes *ww = new gestion_employes();
+    ww->show();
+}
+
+
+
+void GestionVehiculesElectriques::on_gestion_client_3_clicked()
+{
+    this->hide();
+    Gestion_client *wc = new Gestion_client();
+    wc->show();
+}
