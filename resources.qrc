@@ -1,0 +1,33 @@
+<RCC>
+    <qresource prefix="/pics">
+        <file>BG/Rectangle 69.png</file>
+        <file>BG/Rectangle 70.png</file>
+        <file>BG/RECHERCHE.png</file>
+        <file>BG/pngwing.com.png</file>
+        <file>BG/Rectangle 222.png</file>
+        <file>BG/Rectangle 33.png</file>
+        <file>BG/Rectangle 1.png</file>
+        <file>BG/logo final-modified-modified 1.png</file>
+        <file>BG/Rectangle 45.png</file>
+        <file>BG/Rec.png</file>
+        <file>BG/Rectangle 51.png</file>
+        <file>BG/Rectangle 83.png</file>
+        <file>BG/Rectangle 84.png</file>
+        <file>BG/Rectangle 100.png</file>
+        <file>BG/Rectangle 200.png</file>
+        <file>BG/Rectangle 240.png</file>
+        <file>BG/back.png</file>
+        <file>BG/ai-chip-14067.png</file>
+        <file>BG/black-steering-wheel-and-car-driver-hands-17665.png</file>
+        <file>BG/order-alphabetically-6590.png</file>
+        <file>BG/order-numerical-6597.png</file>
+        <file>BG/car-search-12825.png</file>
+        <file>BG/green-add-button-12023.png</file>
+        <file>BG/pdf-download-3395.png</file>
+        <file>BG/pie-chart-5755.png</file>
+        <file>BG/search-engine.png</file>
+        <file>BG/trash-bin-red-circle-button-20567 (1).png</file>
+        <file>BG/trash-bin-red-circle-button-20567.png</file>
+        <file>BG/reload-circle-blue-button-20583.png</file>
+    </qresource>
+</RCC>
