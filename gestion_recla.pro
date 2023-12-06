@@ -1,9 +1,16 @@
-QT       += core gui
-QT += sql
-QT += printsupport
-QT +=charts
+QT       += core gui sql multimedia multimediawidgets
+QT       += sql
+QT       += core gui printsupport
+QT       += core gui sql
+QT += charts
+QT += widgets
+greaterThan(QT_MAJOR_VERSION, 4): QT += widgets printsupport
+QT += widgets printsupport
+QT       += core gui printsupport
+QT       += core gui sql
+QT += charts
+QT += widgets
 
-greaterThan(QT_MAJOR_VERSION, 4): QT += widgets
 CONFIG += c++11
 
 # The following define makes your compiler emit warnings if you use
@@ -20,25 +27,19 @@ DEFINES += QT_DEPRECATED_WARNINGS
 SOURCES += \
     connection.cpp \
     main.cpp \
-    gestionvehiculeselectriques.cpp \
-    voitureelectrique.cpp
-
-IMAGES += images_voitures/
+    gestion_recla.cpp \
+    reclamation.cpp
 
 HEADERS += \
     connection.h \
-    gestionvehiculeselectriques.h \
-    voitureelectrique.h
+    gestion_recla.h \
+    reclamation.h
 
 FORMS += \
-    gestionvehiculeselectriques.ui
+    gestion_recla.ui
+
 
 # Default rules for deployment.
 qnx: target.path = /tmp/$${TARGET}/bin
 else: unix:!android: target.path = /opt/$${TARGET}/bin
 !isEmpty(target.path): INSTALLS += target
-
-LIBS += -lQt5Charts
-
-
-

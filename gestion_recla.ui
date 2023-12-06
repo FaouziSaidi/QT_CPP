@@ -1,0 +1,241 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<ui version="4.0">
+ <class>gestion_recla</class>
+ <widget class="QMainWindow" name="gestion_recla">
+  <property name="geometry">
+   <rect>
+    <x>0</x>
+    <y>0</y>
+    <width>800</width>
+    <height>600</height>
+   </rect>
+  </property>
+  <property name="windowTitle">
+   <string>gestion_recla</string>
+  </property>
+  <widget class="QWidget" name="centralwidget">
+   <widget class="QPushButton" name="pushButton_7">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>140</y>
+      <width>171</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>modifier_reclamation</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_3">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>150</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>nom_client</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>70</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>id_reclamation</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_4">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>190</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>description_rec</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_5">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>60</y>
+      <width>171</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>afficher_reclamation</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="lineEdit_5">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>230</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="placeholderText">
+     <string>statut</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_8">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>100</y>
+      <width>171</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>ajouter_reclamation</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_6">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>180</y>
+      <width>171</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>supprimer_reclamation</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tableView">
+    <property name="geometry">
+     <rect>
+      <x>430</x>
+      <y>100</y>
+      <width>361</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="trier">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>220</y>
+      <width>171</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>trier</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="telecharger">
+    <property name="geometry">
+     <rect>
+      <x>240</x>
+      <y>20</y>
+      <width>171</width>
+      <height>40</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>telecharger</string>
+    </property>
+   </widget>
+   <widget class="QLineEdit" name="le_chercher">
+    <property name="geometry">
+     <rect>
+      <x>210</x>
+      <y>320</y>
+      <width>113</width>
+      <height>20</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QDateEdit" name="lineEdit_2">
+    <property name="geometry">
+     <rect>
+      <x>20</x>
+      <y>110</y>
+      <width>110</width>
+      <height>22</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QLabel" name="label_stat">
+    <property name="geometry">
+     <rect>
+      <x>456</x>
+      <y>23</y>
+      <width>301</width>
+      <height>261</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string/>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="statistique">
+    <property name="geometry">
+     <rect>
+      <x>244</x>
+      <y>270</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>statistique</string>
+    </property>
+   </widget>
+   <widget class="QTableView" name="tableViewHistorique">
+    <property name="geometry">
+     <rect>
+      <x>510</x>
+      <y>340</y>
+      <width>241</width>
+      <height>192</height>
+     </rect>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="historique">
+    <property name="geometry">
+     <rect>
+      <x>250</x>
+      <y>480</y>
+      <width>171</width>
+      <height>41</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>historique</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QMenuBar" name="menubar">
+   <property name="geometry">
+    <rect>
+     <x>0</x>
+     <y>0</y>
+     <width>800</width>
+     <height>22</height>
+    </rect>
+   </property>
+  </widget>
+  <widget class="QStatusBar" name="statusbar"/>
+ </widget>
+ <resources/>
+ <connections/>
+</ui>
