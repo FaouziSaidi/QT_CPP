@@ -13,6 +13,7 @@
 #include <QtCharts/QChartView>
 #include <QtCharts/QPieSeries>
 #include <QtCharts/QPieSlice>
+#include "arduino.h"
 
 
 QT_BEGIN_NAMESPACE
@@ -71,6 +72,8 @@ private slots:
 
     void on_gestion_client_3_clicked();
 
+    void on_ArduinoButton_clicked();
+
 private:
     Ui::GestionVehiculesElectriques *ui;
 
@@ -78,6 +81,6 @@ private:
     QLabel* ImageVoitureLabel;
 public:
     //gestion_employes ww;
-
+    Arduino A;
 };
 #endif // GESTIONVEHICULESELECTRIQUES_H

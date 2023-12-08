@@ -21,9 +21,11 @@ private slots:
 
     bool authenticateEmployee(const QString &email, const QString &password);
 
+    void handleArduinoData();
 private:
     Ui::Authentification *ui;
     gestion_employes w;
+    Arduino A;
 };
 
 #endif // AUTHENTIFICATION_H

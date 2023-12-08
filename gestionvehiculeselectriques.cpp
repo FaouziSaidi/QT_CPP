@@ -20,6 +20,7 @@
 #include "ui_gestionvehiculeselectriques.h"
 #include "voitureelectrique.h"
 #include "gestion_employes.h"
+#include "arduino.h"
 
 QT_CHARTS_USE_NAMESPACE
 using namespace QtCharts;
@@ -43,6 +44,16 @@ GestionVehiculesElectriques::GestionVehiculesElectriques(QWidget *parent)
     connect(ui->BoutonExportPDF, &QPushButton::clicked, this, &GestionVehiculesElectriques::exporterEnPDF);
     connect(ui->TableVehiculesElectriques, SIGNAL(doubleClicked(const QModelIndex&)),
                this, SLOT(on_TableVehiculesElectriques_doubleClicked(const QModelIndex&)));
+
+    int ret=A.connect_arduino (); // lancer la connexion à arduino
+            switch(ret) {
+            case (0) :qDebug() << "arduino is available and connected to: "<< A.getarduino_port_name();
+            break;
+            case (1):qDebug() << "arduino is available but not connected to :" <<A.getarduino_port_name();
+            break;
+            case (-1):qDebug() << "arduino is not available";
+            }
+            QObject::connect(A.getserial(), SIGNAL(readyRead()), this, SLOT(on_ArduinoButton_clicked()));
 
 }
 
@@ -520,4 +531,29 @@ void GestionVehiculesElectriques::on_gestion_client_3_clicked()
     this->hide();
     Gestion_client *wc = new Gestion_client();
     wc->show();
+}
+
+
+
+
+void GestionVehiculesElectriques::on_ArduinoButton_clicked()
+{
+    QString vin = ui->ArduinoLineEdit->text();
+       QSqlQuery query;
+       qDebug() << "VIN :" << vin;
+       query.prepare("SELECT MARQUE FROM VOITUREELECTRIQUE WHERE VIN = :vin");
+       query.bindValue(":vin", vin);
+       if (query.exec() && query.first()) {
+           QString MARQUE = query.value("MARQUE").toString();
+           QByteArray marque = MARQUE.toLatin1();
+           qDebug() << "marque:" << marque;
+           A.write_to_arduino(marque);
+       }
+       else
+       {
+           QString MARQUE = "Not found";
+           QByteArray marque = MARQUE.toLatin1();
+           qDebug() << "marque :" << marque;
+           A.write_to_arduino("<<EMPTY>>");
+       }
 }

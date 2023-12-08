@@ -31,6 +31,16 @@ void Authentification::on_login_clicked()
 
                 QMessageBox::critical(this, "Login Error", "Invalid email or password.");
             }
+
+            int connectionResult = A.connect_arduino();
+
+            if (connectionResult == 0) {
+
+            } else {
+                // Erreur de connexion à l'Arduino
+                QMessageBox::critical(this, "Erreur", "Impossible de se connecter à l'Arduino.");
+            }
+            QObject::connect(A.getserial(), SIGNAL(readyRead()) ,this, SLOT(handleArduinoData()));
 }
 
 bool Authentification::authenticateEmployee(const QString &email, const QString &password)
@@ -49,3 +59,40 @@ bool Authentification::authenticateEmployee(const QString &email, const QString 
         return false;
     }
 }
+
+
+void Authentification::handleArduinoData() {
+
+    QByteArray data;
+    QString password;
+
+    data = A.read_from_arduino();
+    password = QString::fromUtf8(data); // Conversion QByteArray en QString
+    qDebug() << "DATA2 : " << data;
+
+    QSqlQuery query;
+    query.prepare("SELECT NOM FROM employes WHERE MOT_DE_PASSE = ?");
+    query.addBindValue(password); // Conversion QString en QByteArray
+
+    if (query.exec() && query.next()) {
+        // Employee exists in the database
+        w.show();
+        this->hide();
+        QMessageBox::information(this, "ok", "Connected successfully.");
+        A.close_arduino();
+
+    }
+    else if (data=="") {
+
+               // QMessageBox::warning(this, "Erreur", "nothing");
+
+            }
+    else {
+
+            QMessageBox::warning(this, "Erreur", "Employe introuvable");
+
+        }
+
+
+}
+
